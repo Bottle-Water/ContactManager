@@ -1,0 +1,138 @@
+{
+  "Login" : {
+    "type" : "object",
+    "required" : [ "login", "password" ],
+    "properties" : {
+      "login" : {
+        "type" : "string",
+        "example" : "fred"
+      },
+      "password" : {
+        "type" : "string",
+        "example" : "secret"
+      }
+    }
+  },
+  "Color" : {
+    "type" : "object",
+    "required" : [ "userId", "color" ],
+    "properties" : {
+      "userId" : {
+        "type" : "integer",
+        "example" : 1
+      },
+      "color" : {
+        "type" : "string",
+        "example" : "Blue Green"
+      }
+    },
+    "Search" : {
+      "type" : "object",
+      "required" : [ "userId", "search" ],
+      "properties" : {
+        "userId" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "search" : {
+          "type" : "string",
+          "example" : "bl"
+        }
+      }
+    }
+  },
+  "host" : "gerberknights3.xyz",
+  "basePath" : "/LAMPAPI",
+  "schemes" : [ "http" ],
+  "info" : {
+    "description" : "This is the API documentation for the COP 4331 Demo Color App",
+    "version" : "1.0.0",
+    "title" : "The Groovy Color App",
+    "contact" : {
+      "email" : "burkettzach04+api@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths" : {
+    "/Login.php" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Logs in to color app",
+        "operationId" : "doLogin",
+        "description" : "Logs in to colors app",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "loginItem",
+          "description" : "Login",
+          "schema" : {
+            "$ref" : "#/definitions/Login"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          }
+        }
+      }
+    },
+    "/AddColor.php" : {
+      "post" : {
+        "tags" : [ "Colors" ],
+        "summary" : "Adds a color",
+        "operationId" : "addColor",
+        "description" : "Adds a color to the color app database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "colorItem",
+          "description" : "Color",
+          "schema" : {
+            "$ref" : "#/definitions/Color"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          }
+        }
+      }
+    },
+    "/SearchColors.aspx" : null,
+    "post" : {
+      "tags" : [ "Search" ],
+      "summary" : "Searches colors",
+      "operationId" : "searchColor",
+      "description" : "Searches colors from the color app database",
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ],
+      "parameters" : [ {
+        "in" : "body",
+        "name" : "searchItem",
+        "description" : "Color Search",
+        "schema" : {
+          "$ref" : "#/definitions/Search"
+        }
+      } ],
+      "responses" : {
+        "200" : {
+          "description" : "OK"
+        },
+        "404" : {
+          "description" : "URL Not Found"
+        }
+      }
+    }
+  }
+}
