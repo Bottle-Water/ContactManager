@@ -11,6 +11,7 @@
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
 	if( $conn->connect_error )
 	{
+		error_log("This is a custom error message.");
 		returnWithError( $conn->connect_error );
 	}
 	else
