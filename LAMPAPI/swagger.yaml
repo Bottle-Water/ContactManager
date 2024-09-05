@@ -1,0 +1,76 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the API documentation for the COP 4331 Demo Color App",
+    "version" : "1.0.0",
+    "title" : "The Groovy Color App",
+    "contact" : {
+      "email" : "burkettzach04+api@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "gerberknights3.xyz",
+  "basePath" : "/LAMPAPI",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/Login.php" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Logs in to color app",
+        "description" : "Logs in to colors app",
+        "operationId" : "doLogin",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "loginItem",
+          "description" : "Login",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Login"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          }
+        }
+      }
+    },
+    "/AddColor.php" : {
+      "post" : {
+        "tags" : [ "Colors" ],
+        "summary" : "Adds a color",
+        "description" : "Adds a color to the color app database",
+        "operationId" : "addColor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "colorItem",
+          "description" : "Color",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Color"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          }
+        }
+      }
+    },
+    "post" : { }
+  },
+  "definitions" : { }
+}
