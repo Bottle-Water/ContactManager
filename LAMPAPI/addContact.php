@@ -15,7 +15,7 @@
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
-		returnWithError("");
+		returnWithInfo("");
 	}
 
 	function getRequestInfo()
@@ -29,9 +29,9 @@
 		echo $obj;
 	}
 	
-	function returnWithError( $err )
+	function returnWithInfo()
 	{
-		$retValue = '{"error":"' . $err . '"}';
+		$retValue = '{"id":' . $id . ',"FirstName":"' . $FirstName . '","LastName":"' . $LastName . '","message":"success"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
