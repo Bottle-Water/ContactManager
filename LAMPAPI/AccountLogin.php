@@ -1,0 +1,67 @@
+
+<?php
+
+	$inData = getRequestInfo();
+	
+	$id = 0;
+	$firstName = "";
+	$lastName = "";
+
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
+	if( $conn->connect_error )
+	{
+		returnWithError( $conn->connect_error );
+	}
+	else
+	{
+		$stmt = $conn->prepare("SELECT ID, firstName, lastName, password FROM Users WHERE username=?");
+		$stmt->bind_param("s", $inData["username"]);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if( $row = $result->fetch_assoc() )
+		{
+			// Verify the password with the hashed password stored in the database
+			if ( password_verify($inData["password"], $row["password"]) )
+			{
+				returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+			}
+			else
+			{
+				returnWithError("Incorrect Password");
+			}
+		}
+		else
+		{
+			returnWithError("User Not Found");
+		}
+
+		$stmt->close();
+		$conn->close();
+	}
+	
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
+
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+	
+	function returnWithError( $err )
+	{
+		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+	
+	// Function to return the user's information on successful login
+	function returnWithInfo( $firstName, $lastName, $id )
+	{
+		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
+	
+?>
