@@ -25,7 +25,7 @@
 
             $stmt->close();
         }
-        returnWithInfo()
+        returnWithInfo();
         $conn->close();
     }
 
