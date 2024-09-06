@@ -58,7 +58,7 @@
 	}
 	
 	// Function to return the user's information on successful login
-	function returnWithInfo( $firstName, $lastName, $id )
+	function returnWithInfo( $FirstName, $LastName, $id )
 	{
 		$retValue = '{"id":' . $id . ',"FirstName":"' . $FirstName . '","LastName":"' . $LastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
