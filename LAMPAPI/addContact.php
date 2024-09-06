@@ -15,7 +15,7 @@
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
-		returnWithInfo("");
+		returnWithInfo();
 	}
 
 	function getRequestInfo()
@@ -31,7 +31,7 @@
 	
 	function returnWithInfo()
 	{
-		$retValue = '{"id":' . $id . ',"FirstName":"' . $FirstName . '","LastName":"' . $LastName . '","message":"success"}';
+		$retValue = '{"message":"success"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
