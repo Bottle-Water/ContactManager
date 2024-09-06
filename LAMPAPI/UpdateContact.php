@@ -2,12 +2,9 @@
 
     $inData = getRequestInfo();
     $ID = $inData["ID"];
-    $userID = $inData["userID"];
     $Phone = $inData["Phone"];
     $Email = $inData["Email"];
     $Name = $inData["Name"];
-    $searchResults = "";
-    $searchCount = 0;
 
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contact_manager");
     if ($conn->connect_error) 
@@ -18,11 +15,11 @@
     {
 
         
-        $stmt = $conn->prepare("UPDATE Contacts SET Phone = ?, Email = ?, Name = ?, userID = ?, WHERE ID = ?");
+        $stmt = $conn->prepare("UPDATE Contacts SET Phone = IF(LENGTH(?) > 0, ?, Phone), Email = IF(LENGTH(?) > 0, ?, Email), Name = IF(LENGTH(?) > 0, ?, Name) WHERE ID = ?");
         if (!$stmt) {
             returnWithError($conn->error);
         } else {
-            $stmt->bind_param("sssi", $Phone, $Email, $Name, $ID);
+            $stmt->bind_param("ssssssi", $Phone, $Email, $Name, $Phone, $Email, $Name, $ID); // twice for the 2 times in the statement
 
             if (!$stmt->execute()) {
                 returnWithError($stmt->error);
