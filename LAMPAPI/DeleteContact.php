@@ -19,9 +19,13 @@
         } else {
             $stmt->bind_param("i", $ID);
 
-            if (!$stmt->execute()) {
-                returnWithError($stmt->error);
-            }
+			if (!$stmt->execute()) {
+				returnWithError($stmt->error);
+			} else {
+				if ($stmt->affected_rows === 0) {
+					returnWithError("contact not found");
+				}
+			}
 
             $stmt->close();
         }
