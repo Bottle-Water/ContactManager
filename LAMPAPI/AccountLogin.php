@@ -15,7 +15,7 @@
 	else
 	{
 		$stmt = $conn->prepare("SELECT ID, firstName, lastName, password FROM Users WHERE username=?");
-		$stmt->bind_param("s", $inData["username"]);
+		$stmt->bind_param("s", $inData["Login"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
