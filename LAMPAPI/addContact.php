@@ -1,12 +1,11 @@
 <?php
 	$inData = getRequestInfo();
-	
-	$color = $inData["color"];
-	$userId = $inData["userId"];
+
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contact_manager");
 	if ($conn->connect_error) 
 	{
+		error_log("This is a custom error message.");
 		returnWithError( $conn->connect_error );
 	} 
 	else
