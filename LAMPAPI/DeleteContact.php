@@ -25,11 +25,14 @@
 				if ($stmt->affected_rows === 0) {
 					returnWithError("contact not found");
 				}
+                else {
+                    returnWithInfo();
+                }
 			}
 
             $stmt->close();
         }
-        returnWithInfo();
+        
         $conn->close();
     }
 
