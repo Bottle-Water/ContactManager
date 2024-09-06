@@ -1,8 +1,10 @@
 <?php
 	$inData = getRequestInfo();
-	
-	$username = $inData["username"];
-	$password = $inData["password"];
+
+	$firstname = $inData["FirstName"];
+	$lastname = $inData["LastName"];
+	$username = $inData["Login"];
+	$password = $inData["Password"];
 
 	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -13,8 +15,8 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into Users (username, password) VALUES(?, ?)");
-		$stmt->bind_param("ss", $username, $hashed_password);
+		$stmt = $conn->prepare("INSERT into Users (FirstName,LastName,Login,Password) VALUES(?,?,?,?)");
+		$stmt->bind_param("ssss", $firstname, $lastname, $username, $hashed_password);
 		$stmt->execute();
 	
 		if ($stmt->affected_rows > 0) {
