@@ -18,14 +18,14 @@
             returnWithError($conn->error);
         } else {
             $stmt->bind_param("i", $ID);
-            
+
             if (!$stmt->execute()) {
                 returnWithError($stmt->error);
-            } else {
-                returnWithError("");
             }
+
             $stmt->close();
         }
+        returnWithInfo()
         $conn->close();
     }
 
@@ -42,13 +42,13 @@
 	
 	function returnWithError( $err )
 	{
-        $retValue = '{"id":0,"name":"","email":"","phone":"","error":"' . $err . '"}';
+        $retValue = '{"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $searchResults )
+	function returnWithInfo( )
 	{
-		$retValue = '{"results":[' . $searchResults . '],"error":""}';
+		$retValue = '{"results":"contact deleted","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
