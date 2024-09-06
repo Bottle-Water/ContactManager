@@ -13,7 +13,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into users (username, password) VALUES(?, ?)");
+		$stmt = $conn->prepare("INSERT into Users (username, password) VALUES(?, ?)");
 		$stmt->bind_param("ss", $username, $hashed_password);
 		$stmt->execute();
 	
