@@ -22,9 +22,9 @@
 		if( $row = $result->fetch_assoc() )
 		{
 			// Verify the password with the hashed password stored in the database
-			if ( password_verify($inData["password"], $row["password"]) )
+			if ( password_verify($inData["Password"], $row["Password"]) )
 			{
-				returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+				returnWithInfo( $row['FirstName'], $row['LastName'], $row['ID'] );
 			}
 			else
 			{
