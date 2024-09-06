@@ -17,8 +17,9 @@
         $stmt->bind_param("i", $contactId);
         $stmt->execute();
         $stmt->close();
-
+        
 		$conn->close();
+        returnWithError("");
 	}
 
 	function getRequestInfo()
