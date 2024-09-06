@@ -13,11 +13,25 @@
 	else
     {
         $contactId = $inData["contactId"];
-        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ?");
-        $stmt->bind_param("i", $contactId);
-        $stmt->execute();
-        $stmt->close();
-        
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ?");
+		if (!$stmt) {
+			// Debugging: Log SQL prepare error
+			error_log("SQL Prepare Error: " . $conn->error);
+			returnWithError($conn->error);
+		} else {
+			$stmt->bind_param("i", $contactId);
+			if (!$stmt->execute()) {
+				// Debugging: Log SQL execute error
+				error_log("SQL Execute Error: " . $stmt->error);
+				returnWithError($stmt->error);
+			} else {
+				// Debugging: Log success message
+				error_log("Contact deleted successfully");
+				returnWithError("");
+			}
+			$stmt->close();
+		}
+
 		$conn->close();
         returnWithError("");
 	}
