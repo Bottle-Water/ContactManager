@@ -14,7 +14,7 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Password FROM Users WHERE Login=?");
+		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Password FROM Users WHERE BINARY Login=?");
 		$stmt->bind_param("s", $inData["Login"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
