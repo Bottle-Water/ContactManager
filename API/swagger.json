@@ -1,0 +1,300 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API documentation for COP4331 contacts manager",
+    "version" : "1.0.0",
+    "title" : "Contacts manager",
+    "contact" : {
+      "email" : "Richard.Leinecker@ucf.edu"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths" : {
+    "/UpdateContact.php" : {
+      "post" : {
+        "tags" : [ "Contacts" ],
+        "summary" : "Updates the contact of given ID",
+        "operationId" : "contactUpdate",
+        "description" : "Updates the contact of given ID",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "contactUpdate",
+          "description" : "contact update data",
+          "schema" : {
+            "$ref" : "#/definitions/Update"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    },
+    "/addContact.php" : {
+      "post" : {
+        "tags" : [ "Contacts" ],
+        "summary" : "adds contact",
+        "operationId" : "addContact",
+        "description" : "adds contact",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "contactItem",
+          "description" : "contact item",
+          "schema" : {
+            "$ref" : "#/definitions/Contact"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    },
+    "/AccountCreation.php" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Creates Account",
+        "operationId" : "CreateAccount",
+        "description" : "Creates Account",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "loginItem",
+          "description" : "Login",
+          "schema" : {
+            "$ref" : "#/definitions/Account"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    },
+    "/AccountLogin.php" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Logs in to the account",
+        "operationId" : "AccountLogin",
+        "description" : "Logs in to the account",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "loginItem",
+          "description" : "Login",
+          "schema" : {
+            "$ref" : "#/definitions/Login"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    },
+    "/SearchContacts.php" : {
+      "post" : {
+        "tags" : [ "Search" ],
+        "summary" : "Searches contacts",
+        "operationId" : "searchContact",
+        "description" : "Searches contacts from the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "searchItem",
+          "description" : "Contact search",
+          "schema" : {
+            "$ref" : "#/definitions/Search"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    },
+    "/DeleteContact.php" : {
+      "post" : {
+        "tags" : [ "Contacts" ],
+        "summary" : "Deletes a contact",
+        "operationId" : "deleteContact",
+        "description" : "Deletes a contact from the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "contactID",
+          "description" : "Contact search",
+          "schema" : {
+            "$ref" : "#/definitions/ID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "URL Not Found"
+          },
+          "500" : {
+            "description" : "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Update" : {
+      "type" : "object",
+      "required" : [ "ID", "name", "phone", "email", "userID" ],
+      "properties" : {
+        "ID" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "Name" : {
+          "type" : "string",
+          "example" : "begwer"
+        },
+        "Phone" : {
+          "type" : "string",
+          "example" : "2428428"
+        },
+        "Email" : {
+          "type" : "string",
+          "example" : "burger@ucf.edu"
+        }
+      }
+    },
+    "Contact" : {
+      "type" : "object",
+      "required" : [ "name", "phone", "email", "userID" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "example" : "begwer"
+        },
+        "phone" : {
+          "type" : "string",
+          "example" : "2428428"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "burger@ucf.edu"
+        },
+        "userID" : {
+          "type" : "string",
+          "example" : "1"
+        }
+      }
+    },
+    "Login" : {
+      "type" : "object",
+      "required" : [ "Login", "Password" ],
+      "properties" : {
+        "Login" : {
+          "type" : "string",
+          "example" : "fred"
+        },
+        "Password" : {
+          "type" : "string",
+          "example" : "secret"
+        }
+      }
+    },
+    "Account" : {
+      "type" : "object",
+      "required" : [ "firstname", "lastname", "login", "password" ],
+      "properties" : {
+        "FirstName" : {
+          "type" : "string",
+          "example" : "fred"
+        },
+        "LastName" : {
+          "type" : "string",
+          "example" : "gerber"
+        },
+        "Login" : {
+          "type" : "string",
+          "example" : "FGerber"
+        },
+        "Password" : {
+          "type" : "string",
+          "example" : "secret"
+        }
+      }
+    },
+    "Search" : {
+      "type" : "object",
+      "required" : [ "userId", "search" ],
+      "properties" : {
+        "userId" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "search" : {
+          "type" : "string",
+          "example" : "Zach"
+        }
+      }
+    },
+    "ID" : {
+      "type" : "object",
+      "required" : [ "ID" ],
+      "properties" : {
+        "ID" : {
+          "type" : "integer",
+          "example" : 1
+        }
+      }
+    }
+  },
+  "host" : "gerberknights3.xyz",
+  "basePath" : "/LAMPAPI",
+  "schemes" : [ "http" ]
+}
