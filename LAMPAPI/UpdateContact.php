@@ -19,7 +19,7 @@
         if (!$stmt) {
             returnWithError($conn->error);
         } else {
-            $stmt->bind_param("ssssssi", $Name, $Phone, $Email, $Name, $Phone, $Email, $ID); // twice for the 2 times in the statement
+            $stmt->bind_param("ssssssi", $Name, $Name, $Phone, $Phone, $Email, $Email, $ID); // twice for the 2 times in the statement
 
             if (!$stmt->execute()) {
                 returnWithError($stmt->error);
