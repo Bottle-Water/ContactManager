@@ -15,11 +15,11 @@
     {
 
         
-        $stmt = $conn->prepare("UPDATE Contacts SET Phone = IF(LENGTH(?) > 0, ?, Phone), Email = IF(LENGTH(?) > 0, ?, Email), Name = IF(LENGTH(?) > 0, ?, Name) WHERE ID = ?");
+        $stmt = $conn->prepare("UPDATE Contacts SET Name = IF(LENGTH(?) > 0, ?, Name), Phone = IF(LENGTH(?) > 0, ?, Phone), Email = IF(LENGTH(?) > 0, ?, Email) WHERE ID = ?");
         if (!$stmt) {
             returnWithError($conn->error);
         } else {
-            $stmt->bind_param("ssssssi", $Phone, $Email, $Name, $Phone, $Email, $Name, $ID); // twice for the 2 times in the statement
+            $stmt->bind_param("ssssssi", $Name, $Phone, $Email, $Name, $Phone, $Email, $ID); // twice for the 2 times in the statement
 
             if (!$stmt->execute()) {
                 returnWithError($stmt->error);
