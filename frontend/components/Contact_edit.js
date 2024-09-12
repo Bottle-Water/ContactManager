@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const Contact_edit = ({ contacts, update_Contact_Handler }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [contact, setContact] = useState({ name: "", email: "" });
+    const [contact, setContact] = useState({ name: "", email: "", phone: "" });
 
     useEffect(() => {
         const contact_To_Edit = contacts.find(contact => contact.id === id);
@@ -15,7 +15,7 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
 
     const update = (e) => {
         e.preventDefault();
-        if (contact.name === "" || contact.email === "") {
+        if (contact.name === "" || contact.email === "" || contact.phone === "") {
             alert("Must fill in all Fields!");
             return;
         }
@@ -48,6 +48,16 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                         onChange={(e) => setContact({ ...contact, email: e.target.value })}
                     />
                 </div>
+                <div className="field">
+                            <label>Phone Number</label>
+                            <input 
+                                type="tel" 
+                                name="phoneNumber" 
+                                placeholder="Phone Number" 
+                                value={contact.phone}
+                                onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+                            />
+                        </div>
                 <button className="ui button blue">Update</button>
             </form>
         </div>
