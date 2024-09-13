@@ -28,7 +28,7 @@ const Home = () => {
         <form onSubmit={handleLogin}>
           <h1>Login</h1>
           <div className="input-box">
-            <input type="email" name="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="text" name="email" placeholder="Username" required value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" name="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <button type="submit" className="btn">Login</button>
