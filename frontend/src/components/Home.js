@@ -4,19 +4,43 @@ import './styles.css';
 import Navbar from "./Navbar";
 
 const Home = () => {
-  const [email, setEmail] = useState("");
+  const [Login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (email === "bob@gmail.com" && password === "password") {
+    if (Login === "bob@gmail.com" && password === "password") {
       navigate("/contact_list");
-    } else {
-      alert("Invalid Login, Please Try Again!");
-    }
+    };
   };
+    const Home = async () => {
+      const url = 'http://gerberknights3.xyz/LAMPAPI/AccountLogin.php';
+    
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify({ Login, password})
+  
+        })
+        .then(response => response.json())
+        .then(data => console.log( "response" + data));
+    
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error adding contact:', error);
+      }
+  };
+
+
 
   return (
     <>
@@ -28,7 +52,7 @@ const Home = () => {
         <form onSubmit={handleLogin}>
           <h1>Login</h1>
           <div className="input-box">
-            <input type="text" name="email" placeholder="Username" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="text" name="Login" placeholder="Username" required value={Login} onChange={(e) => setLogin(e.target.value)} />
             <input type="password" name="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <button type="submit" className="btn">Login</button>

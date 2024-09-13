@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 
 const Register = () => {
 
-  const [email, setEmail] = useState("");
+  const [Login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -21,6 +21,31 @@ const Register = () => {
     }
   };
 
+  const Register = async () => {
+    const url = 'http://gerberknights3.xyz/LAMPAPI/AccountCreation.php';
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({ Login, password})
+
+      })
+      .then(response => response.json())
+      .then(data => console.log( "response" + data));
+  
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error adding contact:', error);
+    }
+};
+
   return (
     <>
     <Navbar />
@@ -28,7 +53,7 @@ const Register = () => {
         <form onSubmit={handleLogin}>
           <h1>Register an Account</h1>
           <div className="input-box">
-            <input type="text" name="email" placeholder="Enter a Username" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <input type="text" name="Login" placeholder="Enter a Username" required value={Login} onChange={(e) => setLogin(e.target.value)}/>
             <input type="password" name="password" placeholder="Enter a Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
             <br />
             <ul>

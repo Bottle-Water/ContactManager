@@ -20,6 +20,8 @@ const Contact_List = (props) => {
     );
   });
 
+  
+
   return (
     <>
     <Navbar2/>
