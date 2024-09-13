@@ -22,6 +22,31 @@ const Add_Contact = (props) => {
         navigate("/contact_list"); 
     };
 
+    const addContact = async () => {
+    const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({name, email, phone})
+
+      })
+      .then(response => response.json())
+      .then(data => console.log( "response" + data));
+  
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error adding contact:', error);
+    }
+};
+
     return (
         <>
             <Navbar2/>
@@ -61,7 +86,8 @@ const Add_Contact = (props) => {
                             />
                         </div>
                         <div className="add-buttons">
-                            <button className="ui button blue">Add</button>
+                            <button className="ui button blue" onClick={addContact}> Add</button>
+
                             <Link to="/contact_list">Back to List</Link>
                         </div>
                     </form>
