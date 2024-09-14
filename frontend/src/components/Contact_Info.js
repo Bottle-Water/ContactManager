@@ -25,6 +25,7 @@ const Contact_Info = ({ contact, clickHandler }) => {
                     className="edit alternate icon right floated" 
                     style={{ color: "blue", marginTop: "10px", marginRight:"10px", cursor: "pointer" }}
                 ></i>
+
             </Link>
         </div>
     );

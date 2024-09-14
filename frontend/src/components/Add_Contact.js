@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar2 from "./Navbar2";
 
 const Add_Contact = (props) => {
     const [name, setName] = useState("");
@@ -61,7 +60,6 @@ const Add_Contact = (props) => {
 
     return (
         <>
-            <Navbar2 />
             <div className="main-body">
                 <div></div>
                 <h1 className="ui center aligned header">Add Contact</h1>

@@ -154,32 +154,38 @@ input:focus {
     color: #196bb9;
 }
 
+/* These three handle the information boxes with contacts in them */
+.ui.celled.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .info {
     font: bold;
     font-size: larger;
     font-family: Arial, Helvetica, sans-serif;
 }
-
 .item {
-    margin-top: 50px;
-    background-color: rgb(198, 197, 197);
+    width: 150%;
+    margin-top: 15px;
+    background-color: rgb(198, 198, 198);
     border-radius: 10px;
 }
 
+/* These handle the add contact button */
 .add-buttons {
     display: flex;
     flex-direction: column;
     padding-left: 190px;
     padding-right: 190px;
 }
-
 .add-buttons a {
     color: rgb(3, 150, 204);
     text-decoration: underline;
     font-size: 14px;
     font-weight: bold;
 }
-
 .add-buttons a:hover {
     color: #196bb9;
 }
@@ -188,37 +194,112 @@ input:focus {
 .search-bar-container {
     background-color: #eee;
     height: 100vh;
-    width: 100vh;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 200px;
 }
 
 /* Styling for search bar */
 .input-wrapper {
     background-color: white;
-    width: 100%;
+    width: 50%;
     border-radius: 10px;
     height: 2.5rem;
-    padding: 0 15px;
+    padding: 0 10px;
     box-shadow: 0 0 8 #ddd;
     display: flex;
     align-items: center;
     outline: none;
 }
 
-/*  */
+/* Search for a contact's bar */
 .search-bar-box {
+    width: 100%;
     background-color: transparent;
     border: none;
     height: 100%;
     font-size: 1.25rem;
-    width: 100%;
     margin-left: 5px;
 }
-
 .search-bar-box:focus {
     box-shadow: none;
   }
+
+/* Results of the search. */
+.results-list {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    margin-top: 0.6rem;
+    max-height: 250px; 
+    overflow-y: auto;
+}
+.results-list::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 8px;
+}
+
+/* Links on search results */
+.result-link {
+    text-decoration: none;
+
+}
+
+.result-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.result-item:hover {
+    background-color: #ddd;
+}
+
+/* Contact list header */
+.contact-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* These create the text above the edit and trash icons when hovering. */
+.icon {
+    position: relative;
+}
+.edit.icon::after {
+    content: "Edit";
+    visibility: hidden;
+    opacity: 0;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -30px; 
+    transition: opacity 0.3s;
+}
+.trash-icon-wrapper::after {
+    content: "Delete";
+    visibility: hidden;
+    opacity: 0;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -30px; 
+    transition: opacity 0.3s;
+}
+.icon:hover::after {
+    visibility: visible;
+    opacity: 1;
+}

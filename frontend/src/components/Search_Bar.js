@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './styles.css'
 
-const Search_Bar = () => {
+const Search_Bar = ({ setResults }) => {
     const [input, setInput] = useState("");
     const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
     // https://jsonplaceholder.typicode.com/users 
@@ -9,30 +9,49 @@ const Search_Bar = () => {
     // plain object so it now crashes.
 
     const fetchData = (value) => {
-        fetch(url)
+
+        // send entered value and the id to backend to search
+        const postData = {
+            search: value,
+            userID: 1 // MAKE THIS THE VARIABLE FOR THE USERS ID
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        })
+
         .then((response) => response.json())
         .then((json) => {
+
             if (json.error) {
                 console.log("Error: ", json.error)
-                // This will be the console error since none of the
-                // contacts are being added to the database
             } 
-            else if (json.name || json.email || json.phone) {
-                // makes the objects an array
-                const results = [json];
-                const filteredResults = results.filter((user) => {
+
+            else if (json.results && json.results.length > 0) {
+                
+                const filteredResults = json.results.filter((user) => {
                     return (
-                        user.name.toLowerCase().includes(value.toLowerCase()) ||
+                        value && 
+                        (user.name.toLowerCase().includes(value.toLowerCase()) ||
                         user.email.toLowerCase().includes(value.toLowerCase()) ||
-                        user.phone.toLowerCase().includes(value.toLowerCase())
+                        user.phone.toLowerCase().includes(value.toLowerCase()))
                     );
                 });
+
+                setResults(filteredResults);
                 console.log(filteredResults);
             }
+
             else {
                 console.log("No valid data found");
+                setResults([]);
             }
         })
+
         .catch((error) => {
             console.error("Error Searching Data: ", error);
         });
