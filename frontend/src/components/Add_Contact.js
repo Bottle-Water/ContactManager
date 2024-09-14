@@ -23,29 +23,32 @@ const Add_Contact = (props) => {
     };
 
     const addContact = async () => {
-    const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
-  
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify({name, email, phone})
-
-      })
-      .then(response => response.json())
-      .then(data => console.log( "response" + data));
-  
+        const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    } catch (error) {
-      console.error('Error adding contact:', error);
-    }
-};
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({ name, email, phone })
+          });
+      
+          // Check if the response is OK
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          // Try to parse the response as JSON
+          const data = await response.json();
+          console.log("Response data:", data);
+      
+        } catch (error) {
+          // Handle JSON parsing or network errors
+          console.error('Error adding contact:', error);
+        }
+      };
 
     return (
         <>

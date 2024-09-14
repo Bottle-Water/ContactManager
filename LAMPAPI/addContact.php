@@ -12,21 +12,44 @@
 
     $inData = getRequestInfo();
 
+    // Check if the JSON input is valid
+    if ($inData === null) {
+        returnWithError("Invalid JSON input");
+        exit();
+    }
+
+    // Validate required fields
+    if (!isset($inData["userID"]) || !isset($inData["name"]) || !isset($inData["phone"]) || !isset($inData["email"])) {
+        returnWithError("Missing required fields");
+        exit();
+    }
+
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contact_manager");
+    
     if ($conn->connect_error) 
     {
-        error_log("This is a custom error message.");
-        returnWithError($conn->connect_error);
+        error_log("Connection failed: " . $conn->connect_error); // Logs the exact error
+        returnWithError("Database connection failed.");
+        exit();
     } 
     else
     {
         $stmt = $conn->prepare("INSERT INTO Contacts (Name, Phone, Email, UserID, DateCreated) VALUES (?, ?, ?, ?, NOW())");
+        
+        // Bind parameters and check if successful
+        if (!$stmt) {
+            returnWithError("SQL prepare failed: " . $conn->error);
+            exit();
+        }
+        
         $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userID"]);
+        
         if ($stmt->execute()) {
             returnWithInfo();
         } else {
             returnWithError($stmt->error);
         }
+
         $stmt->close();
         $conn->close();
     }
