@@ -8,17 +8,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    // If credentials already taken, alert
-    if(1===0) {
-      // use better logic to figure out which specific one is already used
-      alert("Credentials already taken.");
-    } else {
-      navigate("/");
-    }
-  };
 
   const Register = async () => {
     const url = 'http://gerberknights3.xyz/LAMPAPI/AccountCreation.php';
@@ -30,7 +19,8 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json; charset=UTF-8'
         },
-        body: JSON.stringify({ Login, password})
+        // body: JSON.stringify({ Login, password})
+        body: JSON.stringify({ Login, Password: password})
 
       })
       .then(response => response.json())
@@ -43,6 +33,11 @@ const Register = () => {
     } catch (error) {
       console.error('Error adding contact:', error);
     }
+};
+
+const handleLogin = (e) => {
+  e.preventDefault();
+  Register();
 };
 
   return (

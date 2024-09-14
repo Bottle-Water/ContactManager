@@ -154,7 +154,7 @@ input:focus {
     color: #196bb9;
 }
 
-/* These three handle the information boxes with contacts in them */
+/* These four handle the information boxes with contacts in them */
 .ui.celled.list {
     display: flex;
     flex-direction: column;
@@ -165,6 +165,9 @@ input:focus {
     font: bold;
     font-size: larger;
     font-family: Arial, Helvetica, sans-serif;
+}
+.info div {
+    margin-bottom: 3px;
 }
 .item {
     width: 150%;
@@ -269,22 +272,6 @@ input:focus {
 }
 .edit.icon::after {
     content: "Edit";
-    visibility: hidden;
-    opacity: 0;
-    width: 60px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    bottom: 120%; 
-    left: 50%;
-    margin-left: -30px; 
-    transition: opacity 0.3s;
-}
-.trash-icon-wrapper::after {
-    content: "Delete";
     visibility: hidden;
     opacity: 0;
     width: 60px;
