@@ -17,9 +17,9 @@
         returnWithError("Invalid JSON input");
         exit();
     }
-//!isset($inData["userID"]) || 
+
     // Validate required fields
-    if (!isset($inData["name"]) || !isset($inData["phone"]) || !isset($inData["email"])) {
+    if (!isset($inData["userID"]) ||!isset($inData["name"]) || !isset($inData["phone"]) || !isset($inData["email"])) {
         returnWithError("Missing required fields");
         exit();
     }
