@@ -5,7 +5,7 @@
 }
 
 body {
-    color: #433f3f;
+    color: #000000;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.6em;
@@ -69,24 +69,27 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(/src/images/bkgrnd.jpg) no-repeat;
+    background: url(/src/images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
+    font-family: 'Arial', sans-serif;
+    /* background: linear-gradient(#AFDDE5, #003135); */
 }
 
-/**/
+/* Welcome text at top */
 .welcome-text {
+    /* background-color: #1aa6af; */
+    border-radius: 10px;
     margin-bottom: 30px;
     padding: 20px;
 }
 
 /* This is the box around the login screen */
 form {
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(208, 208, 208);
     padding: 4rem;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-    width: 600px; /* Width of the input box */
-    text-align: center; 
+    width: 600px;
+    text-align: center;
 }
 
 /* These 2 are for the Email, Username, and Passowrd input boxes*/
@@ -95,7 +98,7 @@ form {
     padding: 0.8rem;
     margin-top: 1rem;
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 13px;
     outline: none;
 }
 .input-box {
@@ -114,20 +117,26 @@ form {
     list-style-type: disc;
 }
 
+input:focus {
+    outline: none;
+    border-color: #979797;
+    box-shadow: 0 0 8px rgba(43, 43, 43, 0.5);;
+}
+
 /* Login button's size and color */
 .btn {
     padding: 0.9rem;
-    background-color: #3bb420;
+    background-color: #2baf51;
     color: white;
     border: none;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 15px;
     cursor: pointer;
 }
 
 /* Changes color of Login button when you hover over it*/
 .btn:hover {
-    background-color: #35963a;
+    background-color: #279d49;
 }
 
 /* Margin area for bottom text and login button*/

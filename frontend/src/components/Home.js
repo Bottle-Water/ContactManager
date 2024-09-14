@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import './styles.css';
-import Navbar from "./Navbar";
 
 const Home = () => {
   const [Login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [errMsg, setErrMsg] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (Login === "bob@gmail.com" && password === "password") {
       navigate("/contact_list");
+      setErrMsg('');
+    }
+    else {
+      console.error('Incorrect Login Credentials');
+      setErrMsg('Invalid Username or Password.');
     };
   };
     const Home = async () => {
@@ -37,14 +42,23 @@ const Home = () => {
         }
       } catch (error) {
         console.error('Error adding contact:', error);
+        setErrMsg('Invalid Username or Password.');
       }
   };
 
+  // resets error message
+  const handleUsernameChange = (e) => {
+    setLogin(e.target.value);
+    setErrMsg("");
+  };
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setErrMsg("");
+  };
 
   return (
     <>
-    <Navbar />
       <div className="main-body">
         <div className="welcome-text">
           <h1>Welcome to the UCF Contact Manager</h1>
@@ -52,9 +66,23 @@ const Home = () => {
         <form onSubmit={handleLogin}>
           <h1>Login</h1>
           <div className="input-box">
-            <input type="text" name="Login" placeholder="Username" required value={Login} onChange={(e) => setLogin(e.target.value)} />
-            <input type="password" name="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input type="text" 
+              name="Login" 
+              placeholder="Username" 
+              required 
+              value={Login} 
+              onChange={handleUsernameChange} 
+            />
+            <input type="password" 
+              name="password" 
+              placeholder="Password" 
+              required 
+              value={password} 
+              onChange={handlePasswordChange}
+              />
+
           </div>
+          {errMsg && (<p style={{ color: "red" }}>{errMsg}</p>)}
           <button type="submit" className="btn">Login</button>
           <div className="create-account">
             <p>Don't have an account? <Link to="/register">Create Account</Link></p>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
-import Navbar from './Navbar';
 
 const Register = () => {
 
@@ -48,7 +47,6 @@ const Register = () => {
 
   return (
     <>
-    <Navbar />
       <div className="main-body">
         <form onSubmit={handleLogin}>
           <h1>Register an Account</h1>
@@ -56,15 +54,15 @@ const Register = () => {
             <input type="text" name="Login" placeholder="Enter a Username" required value={Login} onChange={(e) => setLogin(e.target.value)}/>
             <input type="password" name="password" placeholder="Enter a Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
             <br />
-            <ul>
+            {/* <ul>
               <li>Password Requirements:</li>
               <li>Must include one capital letter, one number, and one special character.</li>
               <li>Must be 6-20 characters long.</li>
-            </ul>
+            </ul> */}
           </div>
           <button type="submit" className="btn">Register</button>
           <div className="create-account">
-            <p>Already Have an Account?<Link to="/">Login</Link></p>
+            <p>Already Have an Account? <Link to="/">Login</Link></p>
           </div>
         </form>
       </div>
