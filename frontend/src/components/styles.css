@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 body {
@@ -72,7 +72,7 @@ body {
     background: url(/src/images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
     font-family: 'Arial', sans-serif;
-    /* background: linear-gradient(#AFDDE5, #003135); */
+    /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
 }
 
 /* Welcome text at top */
@@ -183,3 +183,42 @@ input:focus {
 .add-buttons a:hover {
     color: #196bb9;
 }
+
+/* This is the search res */
+.search-bar-container {
+    background-color: #eee;
+    height: 100vh;
+    width: 100vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+}
+
+/* Styling for search bar */
+.input-wrapper {
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 15px;
+    box-shadow: 0 0 8 #ddd;
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+/*  */
+.search-bar-box {
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    font-size: 1.25rem;
+    width: 100%;
+    margin-left: 5px;
+}
+
+.search-bar-box:focus {
+    box-shadow: none;
+  }

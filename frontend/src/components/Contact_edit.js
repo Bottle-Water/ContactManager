@@ -83,7 +83,7 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                                 onChange={(e) => setContact({ ...contact, phone: e.target.value })}
                             />
                         </div>
-        // <button className="ui button blue">Update</button>
+           <button className="ui button blue">Update</button>
                <button type="submit" className="ui button blue">Update</button>
             </form>
         </div>
