@@ -8,18 +8,6 @@ const Home = () => {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState('');
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-
-  //   if (Login === "bob@gmail.com" && password === "password") {
-  //     navigate("/contact_list");
-  //     setErrMsg('');
-  //   }
-  //   else {
-  //     console.error('Incorrect Login Credentials');
-  //     setErrMsg('Invalid Username or Password.');
-  //   };
-  // };
     const Home = async () => {
       const url = 'http://gerberknights3.xyz/LAMPAPI/AccountLogin.php';
     
@@ -30,25 +18,22 @@ const Home = () => {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8'
           },
-          // body: JSON.stringify({ Login, password})
           body: JSON.stringify({ Login, Password: password})
   
         })
         // .then(response => response.json())
         // .then(data => console.log( "response" + data));
+
         // used await instead of then, both work
         const data = await response.json();
         console.log("response", data);
         
-        // checks to make sure its a created account
-        if (data.id > 0) {
+        if (data.userID > 0) {
+          localStorage.setItem('userID', data.userID); // adds userID to the local storage so we can use it on other pages
           navigate("/contact_list");
         } else {
           setErrMsg(data.error || 'Invalid Username or Password');
         }
-        // if (!response.ok) {
-        //   throw new Error(`HTTP error! status: ${response.status}`);
-        // }
       } catch (error) {
         console.error('Error adding contact:', error);
         setErrMsg('Invalid Username or Password.');

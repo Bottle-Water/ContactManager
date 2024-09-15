@@ -13,7 +13,8 @@ const Search_Bar = ({ setResults }) => {
         // send entered value and the id to backend to search
         const postData = {
             search: value,
-            userID: 1 // MAKE THIS THE VARIABLE FOR THE USERS ID
+            userID: localStorage.getItem('userID')
+            // userID: 1
         };
 
         fetch(url, {
