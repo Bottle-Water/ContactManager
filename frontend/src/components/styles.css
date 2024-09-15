@@ -274,7 +274,7 @@ input:focus {
     content: "Edit";
     visibility: hidden;
     opacity: 0;
-    width: 60px;
+    width: 55px;
     background-color: black;
     color: #fff;
     text-align: center;
@@ -284,6 +284,22 @@ input:focus {
     bottom: 120%; 
     left: 50%;
     margin-left: -30px; 
+    transition: opacity 0.3s;
+}
+.trash.icon::after {
+    content: "Delete";
+    visibility: hidden;
+    opacity: 0;
+    width: 55px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -38px; 
     transition: opacity 0.3s;
 }
 .icon:hover::after {
