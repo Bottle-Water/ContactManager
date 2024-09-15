@@ -16,16 +16,13 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
 
     const update = (e) => {
         e.preventDefault();
-        if (contact.Name === "" || contact.email === "" || contact.phone === "") {
-            alert("Must fill in all Fields!");
-            return;
-        }
 
         update_Contact_Handler(contact);
         navigate("/contact_list"); 
     };
+
     const Contact_edit = async () => {
-        const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContacts.php';
+        const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContact.php';
       
         try {
           const response = await fetch(url, {
