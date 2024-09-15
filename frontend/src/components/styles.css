@@ -107,6 +107,14 @@ form {
     margin-bottom: 1rem;
 }
 
+/* First and last name boxes */
+.name-box {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
 /* These 2 are for the password requirements on create.html */
 .input-box ul {
     list-style-type: disc;

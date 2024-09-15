@@ -45,7 +45,8 @@ const Register = () => {
       <form onSubmit={handleRegister}>
         <h1>Register an Account</h1>
         <div className="input-box">
-          <input
+          <div className='name-box'>
+            <input 
             type="text"
             name="FirstName"
             placeholder="Enter First Name"
@@ -61,6 +62,7 @@ const Register = () => {
             value={LastName}
             onChange={(e) => setLastName(e.target.value)}
           />
+          </div>
           <input
             type="text"
             name="Login"
