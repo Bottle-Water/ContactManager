@@ -17,10 +17,10 @@ function App() {
     const userID = localStorage.getItem('userID');
     console.log(contact);
     setContacts([...contacts, { id: uuid(), userID: userID, ...contact }]);
-    // setContacts([...contacts, { id: uuid(), ...contact }]);
   };
 
   const remove_Contact_Handler = (id) => {
+    const userID = localStorage.getItem('userID');
     const newContactList = contacts.filter((contact) => contact.id !== id);
     setContacts(newContactList);
   };

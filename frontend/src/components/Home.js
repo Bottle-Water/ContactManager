@@ -21,15 +21,13 @@ const Home = () => {
           body: JSON.stringify({ Login, Password: password})
   
         })
-        // .then(response => response.json())
-        // .then(data => console.log( "response" + data));
 
         // used await instead of then, both work
         const data = await response.json();
         console.log("response", data);
         
-        if (data.userID > 0) {
-          localStorage.setItem('userID', data.userID); // adds userID to the local storage so we can use it on other pages
+        if (data.id > 0) {
+          localStorage.setItem('userID', data.id); // adds userID to the local storage so we can use it on other pages
           navigate("/contact_list");
         } else {
           setErrMsg(data.error || 'Invalid Username or Password');
