@@ -12,6 +12,9 @@
 
     $inData = getRequestInfo();
 
+    // Log the received data
+    error_log("Received data: " . json_encode($inData));
+
     // Check if the JSON input is valid
     if ($inData === null) {
         returnWithError("Invalid JSON input");
@@ -19,7 +22,7 @@
     }
 
     // Validate required fields
-    if (!isset($inData["userID"]) ||!isset($inData["name"]) || !isset($inData["phone"]) || !isset($inData["email"])) {
+    if (!isset($inData["userID"]) || !isset($inData["name"]) || !isset($inData["phone"]) || !isset($inData["email"])) {
         returnWithError("Missing required fields");
         exit();
     }
@@ -28,7 +31,7 @@
     
     if ($conn->connect_error) 
     {
-        error_log("Connection failed: " . $conn->connect_error); // Logs the exact error
+        error_log("Connection failed: " . $conn->connect_error);
         returnWithError("Database connection failed.");
         exit();
     } 
@@ -36,7 +39,6 @@
     {
         $stmt = $conn->prepare("INSERT INTO Contacts (Name, Phone, Email, UserID, DateCreated) VALUES (?, ?, ?, ?, NOW())");
         
-        // Bind parameters and check if successful
         if (!$stmt) {
             returnWithError("SQL prepare failed: " . $conn->error);
             exit();
@@ -45,7 +47,18 @@
         $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userID"]);
         
         if ($stmt->execute()) {
-            returnWithInfo();
+            // Return the newly added contact data
+            $newContactID = $stmt->insert_id;
+            $stmt->close();
+
+            // Fetch the newly added contact
+            $stmt = $conn->prepare("SELECT * FROM Contacts WHERE ID = ?");
+            $stmt->bind_param("i", $newContactID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $newContact = $result->fetch_assoc();
+
+            returnWithInfo($newContact);
         } else {
             returnWithError($stmt->error);
         }
@@ -61,19 +74,18 @@
 
     function sendResultInfoAsJson($obj)
     {
-        header('Content-type: application/json');
-        echo $obj;
+        echo json_encode($obj);
     }
 
-    function returnWithInfo()
+    function returnWithInfo($contact)
     {
-        $retValue = '{"message":"success"}';
-        sendResultInfoAsJson($retValue);
+        sendResultInfoAsJson($contact);
     }
 
     function returnWithError($err)
     {
-        $retValue = '{"message":"error","error":"' . $err . '"}';
+        http_response_code(400);
+        $retValue = ['message' => 'error', 'error' => $err];
         sendResultInfoAsJson($retValue);
     }
 ?>
