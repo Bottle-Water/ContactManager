@@ -77,12 +77,14 @@ body {
 
 /* Welcome text at top */
 .welcome-text {
-    /* background-color: #1aa6af; */
+    background-color: rgba(59, 173, 235, 0.6);  
     border-radius: 10px;
-    margin-bottom: 30px;
-    padding: 20px;
+    margin-bottom: 60px;
+    padding: 5px;
 }
-
+.welcome-text h1 {
+    opacity: 1;
+}
 /* This is the box around the login screen */
 form {
     background-color: rgb(208, 208, 208);
