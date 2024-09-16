@@ -9,18 +9,12 @@ const Search_Bar = ({ setResults }) => {
     // plain object so it now crashes.
 
     const fetchData = (value) => {
-
-        const postData = {
-            search: value,
-            userId: localStorage.getItem('userID')
-        };
-
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify( postData )
+        body: JSON.stringify( { search: value , userId : localStorage.getItem('userID') } )
         })
 
         .then((response) => response.json())
@@ -31,18 +25,8 @@ const Search_Bar = ({ setResults }) => {
             } 
 
             else if (json.results && json.results.length > 0) {
-                
-                const filteredResults = json.results.filter((user) => {
-                    return (
-                        value && 
-                        (user.name.toLowerCase().includes(value.toLowerCase()) ||
-                        user.email.toLowerCase().includes(value.toLowerCase()) ||
-                        user.phone.toLowerCase().includes(value.toLowerCase()))
-                    );
-                });
-
-                setResults(filteredResults);
-                console.log(filteredResults);
+                setResults(json.results);
+                console.log(json.results);
             }
 
             else {
@@ -54,6 +38,7 @@ const Search_Bar = ({ setResults }) => {
         .catch((error) => {
             console.error("Error Searching Data: ", error);
         });
+
     };
 
     const handleChange = (value) => {
