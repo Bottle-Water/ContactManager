@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { v4 as uuid } from "uuid";
 import Add_Contact from "./Add_Contact";
 import Contact_List from "./Contact_List";
 import Home from "./Home";
@@ -14,13 +13,10 @@ function App() {
   );
 
   const Add_Contact_Handler = (contact) => {
-    const userID = localStorage.getItem('userID');
-    console.log(contact);
-    setContacts([...contacts, { id: uuid(), userID: userID, ...contact }]);
+    setContacts([...contacts, { ...contact }]);
   };
 
   const remove_Contact_Handler = (id) => {
-    const userID = localStorage.getItem('userID');
     const newContactList = contacts.filter((contact) => contact.id !== id);
     setContacts(newContactList);
   };

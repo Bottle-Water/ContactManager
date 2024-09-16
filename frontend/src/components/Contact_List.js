@@ -8,10 +8,29 @@ import './styles.css'
 const Contact_List = (props) => {
   const [results, setResults] = useState([]);
 
-  console.log(props);
-
-  const delete_Contact_Handler = (id) => {
+  const delete_Contact_Handler = async (id) => {
     props.getContactId(id);
+    // THE ID IS CORRECT 
+
+    const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({ ID: id }),
+      });
+
+      const data = await response.json();
+      console.log("response: ", data);
+
+    } catch (error) {
+      console.error('Error Deleting contact:', error);
+    }
+
   };
 
   const render_ContactList = props.contacts.map((contact) => {
@@ -19,11 +38,10 @@ const Contact_List = (props) => {
       <Contact_Info
         contact={contact}
         clickHandler={delete_Contact_Handler}
-        key={contact.id}
+        key={contact.userID}
       />
     );
   });
-
   
 
   return (
