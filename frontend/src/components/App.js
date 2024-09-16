@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Add_Contact from "./Add_Contact";
 import Contact_List from "./Contact_List";
@@ -7,57 +7,82 @@ import Contact_edit from "./Contact_edit";
 import Register from "./Register";
 
 function App() {
-  const LOCAL_STORAGE_KEY = "contacts";
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
-  );
+  const [contacts, setContacts] = useState([]);
 
-  const Add_Contact_Handler = (contact) => {
-    setContacts([...contacts, { ...contact }]);
+  const Add_Contact_Handler = async (contact) => {
+    try {
+      const response = await fetch('http://gerberknights3.xyz/LAMPAPI/addContact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contact),
+      });
+      const data = await response.json();
+      setContacts([...contacts, data.contact]);
+    } catch (error) {
+      console.error('Error adding contact:', error);
+    }
   };
 
-  const remove_Contact_Handler = (id) => {
-    const newContactList = contacts.filter((contact) => contact.id !== id);
-    setContacts(newContactList);
+  const remove_Contact_Handler = async (id) => {
+    try {
+      await fetch('http://gerberknights3.xyz/LAMPAPI/DeleteContact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ID: id }),
+      });
+      const newContactList = contacts.filter((contact) => contact.id !== id);
+      setContacts(newContactList);
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
   };
 
-  const update_Contact_Handler = (updated_Contact) => {
-    setContacts(
-      contacts.map(contact => 
-        contact.id === updated_Contact.id ? updated_Contact : contact
-      )
-    );
+  const update_Contact_Handler = async (updated_Contact) => {
+    try {
+      const response = await fetch('http://gerberknights3.xyz/LAMPAPI/UpdateContact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updated_Contact),
+      });
+      const data = await response.json();
+      setContacts(
+        contacts.map(contact => 
+          contact.id === data.contact.id ? data.contact : contact
+        )
+      );
+    } catch (error) {
+      console.error('Error updating contact:', error);
+    }
   };
-
-  useEffect(() => {
-    const retriveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    if (retriveContacts) setContacts(retriveContacts);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts]);
 
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route 
-            path="/contact_list" 
-            element={<Contact_List contacts={contacts} getContactId={remove_Contact_Handler} />} 
-          />
-          <Route 
-            path="/add" 
-            element={<Add_Contact Add_Contact_Handler={Add_Contact_Handler} />} 
-          />
-          {/*Current issue right now trying to fix the edit button for each of our contacts that we want to edit*/}
-          <Route 
-            path="/edit/:id" 
-            element={<Contact_edit contacts={contacts} update_Contact_Handler={update_Contact_Handler} />} 
-          />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route 
+          path="/contact_list" 
+          element={<Contact_List contacts={contacts} getContactId={remove_Contact_Handler} />} 
+        />
+        <Route 
+          path="/add" 
+          element={<Add_Contact Add_Contact_Handler={Add_Contact_Handler} />} 
+        />
+        <Route 
+          path="/edit/:id" 
+          element={<Contact_edit update_Contact_Handler={update_Contact_Handler} />} 
+        />
+        <Route 
+          path="/register" 
+          element={<Register />} 
+        />
+      </Routes>
+    </Router>
   );
 }
 
