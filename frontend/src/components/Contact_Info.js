@@ -14,7 +14,7 @@ const Contact_Info = ({ contact, clickHandler }) => {
             </div>
             {/* Trash icon */}
             <i 
-                className="trash icon icon right floated container" 
+                className="trash icon right floated " 
                 style={{ color: "red", marginTop: "10px", cursor: "pointer" }}
                 onClick={() => clickHandler(id)}
             ></i>
@@ -25,6 +25,7 @@ const Contact_Info = ({ contact, clickHandler }) => {
                     className="edit alternate icon right floated" 
                     style={{ color: "blue", marginTop: "10px", marginRight:"10px", cursor: "pointer" }}
                 ></i>
+
             </Link>
         </div>
     );

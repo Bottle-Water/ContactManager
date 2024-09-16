@@ -1,11 +1,11 @@
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 body {
-    color: #433f3f;
+    color: #000000;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.6em;
@@ -69,24 +69,29 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(/src/images/bkgrnd.jpg) no-repeat;
+    background: url(/src/images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
+    font-family: 'Arial', sans-serif;
+    /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
 }
 
-/**/
+/* Welcome text at top */
 .welcome-text {
-    margin-bottom: 30px;
-    padding: 20px;
+    background-color: rgba(59, 173, 235, 0.6);  
+    border-radius: 10px;
+    margin-bottom: 60px;
+    padding: 5px;
 }
-
+.welcome-text h1 {
+    opacity: 1;
+}
 /* This is the box around the login screen */
 form {
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(208, 208, 208);
     padding: 4rem;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
-    width: 600px; /* Width of the input box */
-    text-align: center; 
+    width: 600px;
+    text-align: center;
 }
 
 /* These 2 are for the Email, Username, and Passowrd input boxes*/
@@ -95,11 +100,19 @@ form {
     padding: 0.8rem;
     margin-top: 1rem;
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 13px;
     outline: none;
 }
 .input-box {
     margin-bottom: 1rem;
+}
+
+/* First and last name boxes */
+.name-box {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
 }
 
 /* These 2 are for the password requirements on create.html */
@@ -114,20 +127,26 @@ form {
     list-style-type: disc;
 }
 
+input:focus {
+    outline: none;
+    border-color: #979797;
+    box-shadow: 0 0 8px rgba(43, 43, 43, 0.5);;
+}
+
 /* Login button's size and color */
 .btn {
     padding: 0.9rem;
-    background-color: #3bb420;
+    background-color: #2baf51;
     color: white;
     border: none;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 15px;
     cursor: pointer;
 }
 
 /* Changes color of Login button when you hover over it*/
 .btn:hover {
-    background-color: #35963a;
+    background-color: #279d49;
 }
 
 /* Margin area for bottom text and login button*/
@@ -145,32 +164,155 @@ form {
     color: #196bb9;
 }
 
+/* These four handle the information boxes with contacts in them */
+.ui.celled.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .info {
     font: bold;
     font-size: larger;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+.info div {
+    margin-bottom: 3px;
+}
 .item {
-    margin-top: 50px;
-    background-color: rgb(198, 197, 197);
+    width: 150%;
+    margin-top: 15px;
+    background-color: rgb(198, 198, 198);
     border-radius: 10px;
 }
 
+/* These handle the add contact button */
 .add-buttons {
     display: flex;
     flex-direction: column;
     padding-left: 190px;
     padding-right: 190px;
 }
-
 .add-buttons a {
     color: rgb(3, 150, 204);
     text-decoration: underline;
     font-size: 14px;
     font-weight: bold;
 }
-
 .add-buttons a:hover {
     color: #196bb9;
+}
+
+/* This is the search res */
+.search-bar-container {
+    background-color: #eee;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling for search bar */
+.input-wrapper {
+    background-color: white;
+    width: 50%;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 10px;
+    box-shadow: 0 0 8 #ddd;
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+/* Search for a contact's bar */
+.search-bar-box {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    font-size: 1.25rem;
+    margin-left: 5px;
+}
+.search-bar-box:focus {
+    box-shadow: none;
+  }
+
+/* Results of the search. */
+.results-list {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    margin-top: 0.6rem;
+    max-height: 250px; 
+    overflow-y: auto;
+}
+.results-list::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 8px;
+}
+
+/* Links on search results */
+.result-link {
+    text-decoration: none;
+
+}
+
+.result-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.result-item:hover {
+    background-color: #ddd;
+}
+
+/* Contact list header */
+.contact-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* These create the text above the edit and trash icons when hovering. */
+.icon {
+    position: relative;
+}
+.edit.icon::after {
+    content: "Edit";
+    visibility: hidden;
+    opacity: 0;
+    width: 55px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -30px; 
+    transition: opacity 0.3s;
+}
+.trash.icon::after {
+    content: "Delete";
+    visibility: hidden;
+    opacity: 0;
+    width: 55px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -38px; 
+    transition: opacity 0.3s;
+}
+.icon:hover::after {
+    visibility: visible;
+    opacity: 1;
 }

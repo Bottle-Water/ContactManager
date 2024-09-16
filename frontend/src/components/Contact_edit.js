@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const Contact_edit = ({ contacts, update_Contact_Handler }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [contact, setContact] = useState({ name: "", email: "", phone: "" });
+    const [contact, setContact] = useState({ Name: "", email: "", phone: "" });
 
     useEffect(() => {
         const contact_To_Edit = contacts.find(contact => contact.id === id);
@@ -15,13 +16,34 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
 
     const update = (e) => {
         e.preventDefault();
-        if (contact.name === "" || contact.email === "" || contact.phone === "") {
-            alert("Must fill in all Fields!");
-            return;
-        }
 
         update_Contact_Handler(contact);
         navigate("/contact_list"); 
+    };
+
+    const Contact_edit = async () => {
+        const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContact.php';
+      
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({ contact})
+    
+          })
+          .then(response => response.json())
+          .then(data => console.log( "response" + data));
+      
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('Error adding contact:', error);
+        }
     };
 
     return (
@@ -41,7 +63,7 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                 <div className="field">
                     <label>Email</label>
                     <input 
-                        type="text" 
+                        type="email" 
                         name="email"
                         placeholder="Email"  
                         value={contact.email}
@@ -52,13 +74,14 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                             <label>Phone Number</label>
                             <input 
                                 type="tel" 
-                                name="phoneNumber" 
-                                placeholder="Phone Number" 
+                                name="phone" 
+                                placeholder="Phone" 
                                 value={contact.phone}
                                 onChange={(e) => setContact({ ...contact, phone: e.target.value })}
                             />
                         </div>
-                <button className="ui button blue">Update</button>
+           <button className="ui button blue">Update</button>
+               <button type="submit" className="ui button blue">Update</button>
             </form>
         </div>
     );
