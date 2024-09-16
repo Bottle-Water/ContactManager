@@ -12,7 +12,7 @@ const Search_Bar = ({ setResults }) => {
 
         const postData = {
             search: value,
-            userID: localStorage.getItem('userID')
+            userId: localStorage.getItem('userID')
         };
 
         fetch(url, {
