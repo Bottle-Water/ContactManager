@@ -1,8 +1,5 @@
 <?php
- header("Access-Control-Allow-Origin: *");
- header("Access-Control-Allow-Methods: POST, OPTIONS");
- header("Access-Control-Allow-Headers: Content-Type, Authorization");
- header("Content-Type: application/json; charset=UTF-8");
+
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
@@ -29,7 +26,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-            $searchResults .= '{"ID:"' . $row["ID"] . '", "Name":"' . $row["Name"] . '", "Email":"' . $row["Email"] . '", "Phone":"' . $row["Phone"] . '", "DateCreated":"' . $row["DateCreated"] . '"}';
+			$searchResults .= '{"ID":"' . $row["ID"] . '", "Name":"' . $row["Name"] . '", "Email":"' . $row["Email"] . '", "Phone":"' . $row["Phone"] . '", "DateCreated":"' . $row["DateCreated"] . '"}';
 		}
 		
 		if( $searchCount == 0 )
