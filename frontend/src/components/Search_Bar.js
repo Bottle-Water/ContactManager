@@ -10,11 +10,9 @@ const Search_Bar = ({ setResults }) => {
 
     const fetchData = (value) => {
 
-        // send entered value and the id to backend to search
         const postData = {
             search: value,
             userID: localStorage.getItem('userID')
-            // userID: 1
         };
 
         fetch(url, {
@@ -22,7 +20,7 @@ const Search_Bar = ({ setResults }) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(postData)
+            body: JSON.stringify( postData )
         })
 
         .then((response) => response.json())

@@ -31,7 +31,7 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
             headers: {
               'Content-Type': 'application/json; charset=UTF-8'
             },
-            body: JSON.stringify({ contact})
+            body: JSON.stringify({ contact })
     
           })
           .then(response => response.json())

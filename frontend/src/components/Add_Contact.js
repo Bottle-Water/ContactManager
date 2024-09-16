@@ -5,29 +5,14 @@ const Add_Contact = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [userID, setUserID] = useState(props.userID); // Ensure userID is passed as a prop or state
+    const navigate = useNavigate();
 
-
-  
-    const navigate = useNavigate();  
-
-    const add = (e) => {
+    const add = async (e) => {
         e.preventDefault();
-        if (name === "" || email === "" || phone === "") {
-            alert("All fields are mandatory!");
-            return;
-        }
-        props.Add_Contact_Handler({ name, email, phone, userID });
-        setName("");
-        setEmail("");
-        setPhone("");
 
-        navigate("/contact_list"); 
-    };
+        const userID = localStorage.getItem('userID');
 
-    const addContact = async () => {
         const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
-
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -37,25 +22,20 @@ const Add_Contact = (props) => {
                 },
                 body: JSON.stringify({ name, email, phone, userID }) // Make sure to include userID
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            if (response.status === 200) {
-                alert("Contact added successfully!");
-            }
-
-            if (response.status === 409) {
-                alert("Contact already exists!");
-            }
-
             const data = await response.json();
+            const id = data.ID;
+            props.Add_Contact_Handler({ name, email, phone, userID , id});
             console.log("Response data:", data);
 
         } catch (error) {
             console.error('Error adding contact:', error);
         }
+
+        setName("");
+        setEmail("");
+        setPhone("");
+
+        navigate("/contact_list"); 
     };
 
     return (
@@ -71,6 +51,7 @@ const Add_Contact = (props) => {
                             name="name" 
                             placeholder="Name" 
                             value={name}
+                            required
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
@@ -80,6 +61,7 @@ const Add_Contact = (props) => {
                             type="email" 
                             name="email"
                             placeholder="Email"  
+                            required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -91,11 +73,12 @@ const Add_Contact = (props) => {
                             name="phoneNumber" 
                             placeholder="Phone Number" 
                             value={phone}
+                            required
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </div>
                     <div className="add-buttons">
-                        <button className="ui button blue" onClick={addContact}>Add</button>
+                        <button className="ui button blue">Add</button>
                         <Link to="/contact_list">Back to List</Link>
                     </div>
                 </form>

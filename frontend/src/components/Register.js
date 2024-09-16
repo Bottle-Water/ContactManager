@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const Register = () => {
@@ -7,6 +8,7 @@ const Register = () => {
   const [LastName, setLastName] = useState('');
   const [Login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const Register = async () => {
     const url = 'http://gerberknights3.xyz/LAMPAPI/AccountCreation.php';
@@ -28,10 +30,11 @@ const Register = () => {
 
       const data = await response.json();
       console.log('Response:', data);
-      // Redirect to login page or show success message
+      if(data) {
+        navigate('/');
+      }
     } catch (error) {
       console.error('Error adding contact:', error);
-      // Show error message to the user
     }
   };
 
