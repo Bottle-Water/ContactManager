@@ -318,6 +318,6 @@ input:focus {
 .icon-group {
     display: flex; 
     flex-direction: row;   
-    margin-left: 92%;
+    margin-left: 90%;
     gap: 10px;
 }

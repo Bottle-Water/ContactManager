@@ -7,9 +7,45 @@ import './styles.css'
 
 const Contact_List = (props) => {
   const [results, setResults] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+
+  const fetchData = (value) => {
+    const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
+
+    if (value === "") {
+        setResults([]);
+    } 
+    else {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        body: JSON.stringify( { search: value , userId : localStorage.getItem('userID') } )
+        })
+        .then((response) => response.json())
+        .then((json) => {
+
+            if (json.error) {
+                console.log("Error: ", json.error)
+                setResults([]);
+            } 
+            else if (json.results && json.results.length > 0) {
+                setResults(json.results);
+                console.log(json.results);
+            }
+            else {
+                console.log("No valid data found");
+                setResults([]);
+            }
+        })
+        .catch((error) => {
+            console.error("Error Searching Data: ", error);
+        });
+    }   
+  };
 
   const delete_Contact_Handler = async (id) => {
-
     const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
 
     try {
@@ -24,6 +60,11 @@ const Contact_List = (props) => {
 
       const data = await response.json();
       console.log("response: ", data);
+
+      // refetch the data
+      if (data.results === "contact deleted") {
+        fetchData(searchValue);
+      }
 
     } catch (error) {
       console.error('Error Deleting contact:', error);
@@ -46,7 +87,7 @@ const Contact_List = (props) => {
     <>
     <Navbar2/>
       <div className="search-bar-container">
-        <Search_Bar setResults={ setResults }/>
+        <Search_Bar setResults={ setResults } setSearchValue={ setSearchValue }/>
         <div className='results-list'>
           {results.map((result, index) => (
               <div className="result-item">
@@ -54,7 +95,6 @@ const Contact_List = (props) => {
                 <p>Email: {result.Email}</p>
                 <p>Phone: {result.Phone}</p>
                 <p>Date Created: {result.DateCreated}</p>
-                {/* map again for Contact_Info with userID in searchContacts.php? */}
                 <div className="icon-group">
                   <Link to={`/edit/${result.ID}`}>
                   <i 

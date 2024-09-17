@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './styles.css'
 
-const Search_Bar = ({ setResults }) => {
+const Search_Bar = ({ setResults, setSearchValue }) => {
     const [input, setInput] = useState("");
     const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
 
@@ -46,6 +46,7 @@ const Search_Bar = ({ setResults }) => {
 
     const handleChange = (value) => {
         setInput(value);
+        setSearchValue(value);
         fetchData(value);
     };
 
