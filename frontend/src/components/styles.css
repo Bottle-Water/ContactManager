@@ -208,7 +208,7 @@ input:focus {
     background-color: #eee;
     height: 100vh;
     padding: 20px;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: center;
 }
@@ -241,29 +241,28 @@ input:focus {
 
 /* Results of the search. */
 .results-list {
+    max-height: 400px; 
+    overflow-y: auto;  
     width: 50%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    margin-top: 0.6rem;
-    max-height: 250px; 
-    overflow-y: auto;
+    border-radius: 5px;      
+    margin: 0 auto;    
 }
 .results-list::-webkit-scrollbar-track {
     background: white;
     border-radius: 8px;
 }
 
-/* Links on search results */
-.result-link {
-    text-decoration: none;
-
-}
-
 .result-item {
+    width: 100%; 
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
+.result-item p:last-child {
+    border-bottom: none;
 }
 .result-item:hover {
     background-color: #ddd;
@@ -315,4 +314,10 @@ input:focus {
 .icon:hover::after {
     visibility: visible;
     opacity: 1;
+}
+.icon-group {
+    display: flex; 
+    flex-direction: row;   
+    margin-left: 92%;
+    gap: 10px;
 }

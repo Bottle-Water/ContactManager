@@ -55,7 +55,7 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                     <input 
                         type="text" 
                         name="name" 
-                        placeholder="Name" 
+                        placeholder="name" 
                         value={contact.name}
                         onChange={(e) => setContact({ ...contact, name: e.target.value })}
                     />

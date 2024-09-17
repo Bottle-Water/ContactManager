@@ -9,8 +9,6 @@ const Contact_List = (props) => {
   const [results, setResults] = useState([]);
 
   const delete_Contact_Handler = async (id) => {
-    props.getContactId(id);
-    // THE ID IS CORRECT 
 
     const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
 
@@ -49,35 +47,31 @@ const Contact_List = (props) => {
     <Navbar2/>
       <div className="search-bar-container">
         <Search_Bar setResults={ setResults }/>
-        {/* Uncomment these lines out to see what the results will
-        look like (they will stack with mapping) */}
-        {/* <div className='results-list'>
-          <Link to="/Contact_List" className='result-link'>
-            <div className="result-item">
-              <p>A</p>
-              <p>A</p>
-            </div>
-            <div className="result-item">
-              <p>A</p>
-              <p>A</p>
-            </div>
-            <div className="result-item">
-              <p>A</p>
-              <p>A</p>
-            </div>
-          </Link>
-          </div> */}
-
+        <div className='results-list'>
           {results.map((result, index) => (
-            <Link to="/" key={index} className="result-link">
               <div className="result-item">
                 <p>Name: {result.Name}</p>
                 <p>Email: {result.Email}</p>
                 <p>Phone: {result.Phone}</p>
                 <p>Date Created: {result.DateCreated}</p>
+                {/* map again for Contact_Info with userID in searchContacts.php? */}
+                <div className="icon-group">
+                  <Link to={`/edit/${result.ID}`}>
+                  <i 
+                      className="edit icon" 
+                      style={{ color: "blue", cursor: "pointer" }}
+                  ></i>
+                  </Link>
+                  <i 
+                  className="trash icon" 
+                  style={{ color: "red", cursor: "pointer" }}
+                  onClick={() => delete_Contact_Handler(result.ID)}
+                  ></i>
+                  </div>
               </div>
-            </Link>
           ))}
+        </div>
+
       <div className="contact-header">Contact List</div>
       <p></p>
         <div className="ui celled list">{render_ContactList}</div>
