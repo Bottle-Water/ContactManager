@@ -2,26 +2,48 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 
-const Contact_edit = ({ contacts, update_Contact_Handler }) => {
+const Contact_edit = () => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
+
+    // gets id from website link
     const { id } = useParams();
     const navigate = useNavigate();
-    const [contact, setContact] = useState({ Name: "", email: "", phone: "" });
 
+    // This function will show the old contact when you visit the page
     useEffect(() => {
-        const contact_To_Edit = contacts.find(contact => contact.id === id);
-        if (contact_To_Edit) {
-            setContact(contact_To_Edit);
-        }
-    }, [id, contacts]);
+        fetchContact(id);
+    }, [id]);
 
-    const update = (e) => {
-        e.preventDefault();
+    // fetches original contact and sets name, email, and phone to them
+    const fetchContact = async (id) => {
+        // need to change url or use it differently
+        const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
+    
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify({ ID: id }) // doesnt take in ID
+            })
 
-        update_Contact_Handler(contact);
-        navigate("/contact_list"); 
-    };
+            const contact = await response.json();
+            setName(contact.Name || "");
+            console.log(contact.Name, contact.Phone, contact.Email);
+            setEmail(contact.Email || "");
+            setPhone(contact.Phone || "");
 
-    const Contact_edit = async () => {
+        } catch (error) {
+                console.error("Error Finding Contact: ", error);
+            };
+      };
+
+    // this will update the contact
+    const updateContact = async (id) => {
         const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContact.php';
       
         try {
@@ -31,19 +53,21 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
             headers: {
               'Content-Type': 'application/json; charset=UTF-8'
             },
-            body: JSON.stringify({ contact })
+            body: JSON.stringify({ ID : id, Name: name, Email: email, Phone: phone})
     
           })
-          .then(response => response.json())
-          .then(data => console.log( "response" + data));
+          const data = await response.json();
+          console.log("response: ", data);
+          navigate("/contact_list"); 
       
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
         } catch (error) {
-          console.error('Error adding contact:', error);
+          console.error('Error updating contact:', error);
         }
+    };
+
+    const update = (e) => {
+        e.preventDefault();
+        updateContact(id);
     };
 
     return (
@@ -55,9 +79,9 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                     <input 
                         type="text" 
                         name="name" 
-                        placeholder="name" 
-                        value={contact.name}
-                        onChange={(e) => setContact({ ...contact, name: e.target.value })}
+                        placeholder="Name" 
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div className="field">
@@ -66,8 +90,8 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                         type="email" 
                         name="email"
                         placeholder="Email"  
-                        value={contact.email}
-                        onChange={(e) => setContact({ ...contact, email: e.target.value })}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="field">
@@ -76,8 +100,8 @@ const Contact_edit = ({ contacts, update_Contact_Handler }) => {
                                 type="tel" 
                                 name="phone" 
                                 placeholder="Phone" 
-                                value={contact.phone}
-                                onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
                         </div>
                 <button type="submit" className="ui button blue">Update</button>

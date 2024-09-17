@@ -317,7 +317,8 @@ input:focus {
 }
 .icon-group {
     display: flex; 
-    flex-direction: row;   
+    flex-direction: row; 
     margin-left: 90%;
     gap: 10px;
+
 }

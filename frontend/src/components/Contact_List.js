@@ -9,6 +9,8 @@ const Contact_List = (props) => {
   const [results, setResults] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
+
+  // this fetch works for the search bar
   const fetchData = (value) => {
     const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
 
@@ -61,7 +63,7 @@ const Contact_List = (props) => {
       const data = await response.json();
       console.log("response: ", data);
 
-      // refetch the data
+      // refetch the data after a deletion
       if (data.results === "contact deleted") {
         fetchData(searchValue);
       }
@@ -99,7 +101,7 @@ const Contact_List = (props) => {
                   <Link to={`/edit/${result.ID}`}>
                   <i 
                       className="edit icon" 
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer"}}
                   ></i>
                   </Link>
                   <i 
