@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 
 const Contact_edit = () => {
     const [name, setName] = useState("")
@@ -10,37 +9,15 @@ const Contact_edit = () => {
     // gets id from website link
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
 
     // This function will show the old contact when you visit the page
     useEffect(() => {
-        fetchContact(id);
-    }, [id]);
-
-    // fetches original contact and sets name, email, and phone to them
-    const fetchContact = async (id) => {
-        // need to change url or use it differently
-        const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
-    
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            body: JSON.stringify({ ID: id }) // doesnt take in ID
-            })
-
-            const contact = await response.json();
-            setName(contact.Name || "");
-            console.log(contact.Name, contact.Phone, contact.Email);
-            setEmail(contact.Email || "");
-            setPhone(contact.Phone || "");
-
-        } catch (error) {
-                console.error("Error Finding Contact: ", error);
-            };
-      };
+        const { name, email, phone } = location.state;
+        setName(name);
+        setEmail(email);
+        setPhone(phone);
+    }, [id, location.state]);
 
     // this will update the contact
     const updateContact = async (id) => {
@@ -71,9 +48,9 @@ const Contact_edit = () => {
     };
 
     return (
-        <div className="ui main">
+        <div className="main-body">
             <h2>Edit Contact</h2>
-            <form className="ui form" onSubmit={update}>
+            <form className="ui form">
                 <div className="field">
                     <label>Name</label>
                     <input 
@@ -104,7 +81,8 @@ const Contact_edit = () => {
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                         </div>
-                <button type="submit" className="ui button blue">Update</button>
+                <button type="submit" className="ui button blue" onClick={update}>Update</button>
+                <Link to={"/contact_list"}>Back to List</Link>
             </form>
         </div>
     );

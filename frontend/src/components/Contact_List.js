@@ -98,7 +98,10 @@ const Contact_List = (props) => {
                 <p>Phone: {result.Phone}</p>
                 <p>Date Created: {result.DateCreated}</p>
                 <div className="icon-group">
-                  <Link to={`/edit/${result.ID}`}>
+                  <Link 
+                  to={`/edit/${result.ID}`}
+                  state = {{ name: result.Name, email: result.Email, phone: result.Phone }}
+                  >
                   <i 
                       className="edit icon" 
                       style={{ color: "blue", cursor: "pointer"}}
