@@ -115,7 +115,7 @@ form {
     flex-direction: row;
 }
 
-/* These 2 are for the password requirements on create.html */
+/* These 2 are for the password requirements on register */
 .input-box ul {
     list-style-type: disc;
     text-align: left;
@@ -143,8 +143,6 @@ input:focus {
     border-radius: 15px;
     cursor: pointer;
 }
-
-/* Changes color of Login button when you hover over it*/
 .btn:hover {
     background-color: #279d49;
 }
@@ -164,7 +162,7 @@ input:focus {
     color: #196bb9;
 }
 
-/* These four handle the information boxes with contacts in them */
+/* These handle the information boxes with contacts in them */
 .ui.celled.list {
     display: flex;
     flex-direction: column;
@@ -175,11 +173,10 @@ input:focus {
     font: bold;
     font-size: larger;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    margin-bottom: 10px;
 }
-.info div {
-    margin-bottom: 3px;
-}
-.item {
+.contact-list {
     width: 150%;
     margin-top: 15px;
     background-color: rgb(198, 198, 198);

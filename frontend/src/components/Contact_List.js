@@ -5,7 +5,7 @@ import Navbar2 from "./Navbar2";
 import Search_Bar from "./Search_Bar";
 import './styles.css'
 
-const Contact_List = (props) => {
+const Contact_List = () => {
   const [results, setResults] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
@@ -23,7 +23,7 @@ const Contact_List = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-        body: JSON.stringify( { search: value , userId : localStorage.getItem('userID') } )
+        body: JSON.stringify({ search: value, userId : localStorage.getItem('userID') })
         })
         .then((response) => response.json())
         .then((json) => {
@@ -73,17 +73,12 @@ const Contact_List = (props) => {
     }
 
   };
-
-  const render_ContactList = props.contacts.map((contact) => {
-    return (
-      <Contact_Info
-        contact={contact}
-        clickHandler={delete_Contact_Handler}
-        key={contact.userID}
-      />
-    );
-  });
   
+  const render_ContactList = () => {
+    return (
+      <Contact_Info />
+    );
+  };
 
   return (
     <>
@@ -119,7 +114,7 @@ const Contact_List = (props) => {
 
       <div className="contact-header">Contact List</div>
       <p></p>
-        <div className="ui celled list">{render_ContactList}</div>
+        <div className="ui celled list">{render_ContactList()}</div>
         <Link to="/add">
         <button className="ui blue button">Add Contact</button>
         </Link>
