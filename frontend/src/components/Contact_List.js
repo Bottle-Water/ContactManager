@@ -87,7 +87,7 @@ const Contact_List = () => {
         <Search_Bar setResults={ setResults } setSearchValue={ setSearchValue }/>
         <div className='results-list'>
           {results.map((result, index) => (
-              <div className="result-item">
+              <div key={index} className="result-item">
                 <p>Name: {result.Name}</p>
                 <p>Email: {result.Email}</p>
                 <p>Phone: {result.Phone}</p>
