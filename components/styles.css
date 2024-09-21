@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(bkgrnd.jpg) no-repeat; 
+    background: url(../images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
 }
 .welcome-text {
