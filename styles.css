@@ -69,7 +69,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(/src/images/bkgrnd.jpg) no-repeat; 
+    background: url(images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
     font-family: 'Arial', sans-serif;
     /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
