@@ -13,14 +13,12 @@
                 <div class="name-box">
                     <input 
                         type="text" 
-                        name="FirstName" 
                         placeholder="Enter First Name" 
                         required 
                         id="FirstName-id"
                     />
                     <input 
                         type="text" 
-                        name="LastName" 
                         placeholder="Enter Last Name" 
                         required 
                         id="LastName-id"
@@ -28,18 +26,19 @@
                 </div>
                 <input 
                     type="text" 
-                    name="Login" 
                     placeholder="Enter a Username" 
                     required
                     id="Login-id"
                 />
                 <input 
                     type="password" 
-                    name="password" 
                     placeholder="Enter a Password" 
                     required 
                     id="Password-id"
                 />
+            </div>
+            <div>
+                <p id="regerror" style="color: red;"></p>
             </div>
             <button type="submit" class="btn">Register</button>
             <div class="create-account">
@@ -48,6 +47,6 @@
         </form>
     </div>
     <!-- Add location of js file in script as src="file.js" -->
-    <script></script>
+    <script src="./js/account.js"></script>
 </body>
 </html>
