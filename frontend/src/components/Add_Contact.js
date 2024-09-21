@@ -1,81 +1,27 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+function addContact(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const userID = localStorage.getItem('userID'); // assuming userID is stored in localStorage
 
-const Add_Contact = (props) => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const navigate = useNavigate();
+    const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
 
-    const add = async (e) => {
-        e.preventDefault();
-        const userID = localStorage.getItem('userID');
-
-        const url = 'http://gerberknights3.xyz/LAMPAPI/addContact.php';
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8'
-                },
-                body: JSON.stringify({ name, email, phone, userID })
-            });
-            const data = await response.json();
-            console.log("Response data:", data);
-        } catch (error) {
-            console.error('Error adding contact:', error);
-        }
-        navigate("/contact_list"); 
-    };
-
-    return (
-        <>
-            <div className="main-body">
-                <div></div>
-                <h1 className="ui center aligned header">Add Contact</h1>
-                <form className="ui form" onSubmit={add}>
-                    <div className="field">
-                        <label>Name</label>
-                        <input 
-                            type="text" 
-                            name="name" 
-                            placeholder="Name" 
-                            value={name}
-                            required
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div className="field">
-                        <label>Email</label>
-                        <input 
-                            type="email" 
-                            name="email"
-                            placeholder="Email"  
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="field">
-                        <label>Phone Number</label>
-                        <input 
-                            type="tel" 
-                            name="phoneNumber" 
-                            placeholder="Phone Number" 
-                            value={phone}
-                            required
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
-                    </div>
-                    <div className="add-buttons">
-                        <button className="ui button blue">Add</button>
-                        <Link to="/contact_list">Back to List</Link>
-                    </div>
-                </form>
-            </div>
-        </>
-    );
-};
-
-export default Add_Contact;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({ name, email, phone, userID })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Response data:", data);
+        // Redirect to contact list after successful submission
+        window.location.href = "/contact_list.html";
+    })
+    .catch(error => {
+        console.error('Error adding contact:', error);
+    });
+}

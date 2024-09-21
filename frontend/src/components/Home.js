@@ -1,93 +1,47 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import './styles.css';
+document.getElementById('login-form').addEventListener('submit', handleLogin);
 
-const Home = () => {
-  const [Login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const [errMsg, setErrMsg] = useState('');
+let errMsg = "";
 
-    const Home = async () => {
-      const url = 'http://gerberknights3.xyz/LAMPAPI/AccountLogin.php';
-    
-      try {
+// Function to handle login form submission
+async function handleLogin(event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    const Login = document.getElementById('login').value;
+    const password = document.getElementById('password').value;
+    const errorMsgElement = document.getElementById('error-msg');
+
+    const url = 'http://gerberknights3.xyz/LAMPAPI/AccountLogin.php';
+
+    try {
         const response = await fetch(url, {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-          },
-          body: JSON.stringify({ Login, Password: password})
-  
-        })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({ Login, Password: password })
+        });
 
-        // used await instead of then, both work
         const data = await response.json();
         console.log("response", data);
-        
+
         if (data.id > 0) {
-          localStorage.setItem('userID', data.id); // adds userID to the local storage so we can use it on other pages
-          navigate("/contact_list");
+            localStorage.setItem('userID', data.id); // Store userID in localStorage for later use
+            window.location.href = '/contact_list.html'; // Redirect to contact list page
         } else {
-          setErrMsg(data.error || 'Invalid Username or Password');
+            errMsg = data.error || 'Invalid Username or Password';
+            errorMsgElement.textContent = errMsg;
         }
-      } catch (error) {
-        console.error('Error adding contact:', error);
-        setErrMsg('Invalid Username or Password.');
-      }
-  };
+    } catch (error) {
+        console.error('Error during login:', error);
+        errMsg = 'Invalid Username or Password.';
+        errorMsgElement.textContent = errMsg;
+    }
+}
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    Home();  
-  };
-
-  // resets error message
-  const handleUsernameChange = (e) => {
-    setLogin(e.target.value);
-    setErrMsg("");
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setErrMsg("");
-  };
-
-  return (
-    <>
-      <div className="main-body">
-        <div className="welcome-text">
-          <h1>Welcome to the UCF Contact Manager</h1>
-        </div>
-        <form onSubmit={handleLogin}>
-          <h1>Login</h1>
-          <div className="input-box">
-            <input type="text" 
-              name="Login" 
-              placeholder="Username" 
-              required 
-              value={Login} 
-              onChange={handleUsernameChange} 
-            />
-            <input type="password" 
-              name="password" 
-              placeholder="Password" 
-              required 
-              value={password} 
-              onChange={handlePasswordChange}
-              />
-
-          </div>
-          {errMsg && (<p style={{ color:"red" }}>{errMsg}</p>)}
-          <button type="submit" className="btn">Login</button>
-          <div className="create-account">
-            <p>Don't have an account? <Link to="/register">Create Account</Link></p>
-          </div>
-        </form>
-      </div>
-    </>
-  );
-};
-
-export default Home;
+// Reset error message when the user starts typing
+document.getElementById('login').addEventListener('input', () => {
+    document.getElementById('error-msg').textContent = '';
+});
+document.getElementById('password').addEventListener('input', () => {
+    document.getElementById('error-msg').textContent = '';
+});

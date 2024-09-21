@@ -1,91 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
+// Get the contact ID from the URL query string
+const urlParams = new URLSearchParams(window.location.search);
+const contactId = urlParams.get('id');
 
-const Contact_edit = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
+// Function to populate the form with existing contact details
+function populateContactDetails() {
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+    const phoneField = document.getElementById('phone');
 
-    // gets id from website link
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    // This function will show the old contact when you visit the page
-    useEffect(() => {
-        const { name, email, phone } = location.state;
-        setName(name);
-        setEmail(email);
-        setPhone(phone);
-    }, [id, location.state]);
-
-    // this will update the contact
-    const updateContact = async (id) => {
-        const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContact.php';
-      
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8'
-            },
-            body: JSON.stringify({ ID : id, Name: name, Email: email, Phone: phone})
-    
-          })
-          const data = await response.json();
-          console.log("response: ", data);
-          navigate("/contact_list"); 
-      
-        } catch (error) {
-          console.error('Error updating contact:', error);
-        }
+    // Assuming the contact data is passed via URL parameters or saved in localStorage
+    const contactData = {
+        name: localStorage.getItem('contactName'),
+        email: localStorage.getItem('contactEmail'),
+        phone: localStorage.getItem('contactPhone')
     };
 
-    const update = (e) => {
-        e.preventDefault();
-        updateContact(id);
-    };
+    nameField.value = contactData.name;
+    emailField.value = contactData.email;
+    phoneField.value = contactData.phone;
+}
 
-    return (
-        <div className="main-body">
-            <h2>Edit Contact</h2>
-            <form className="ui form">
-                <div className="field">
-                    <label>Name</label>
-                    <input 
-                        type="text" 
-                        name="name" 
-                        placeholder="Name" 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
-                <div className="field">
-                    <label>Email</label>
-                    <input 
-                        type="email" 
-                        name="email"
-                        placeholder="Email"  
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="field">
-                            <label>Phone Number</label>
-                            <input 
-                                type="tel" 
-                                name="phone" 
-                                placeholder="Phone" 
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                        </div>
-                <button type="submit" className="ui button blue" onClick={update}>Update</button>
-                <Link to={"/contact_list"}>Back to List</Link>
-            </form>
-        </div>
-    );
-};
+// Call this function on page load to fill in the form
+document.addEventListener('DOMContentLoaded', populateContactDetails);
 
-export default Contact_edit;
+// Function to handle updating the contact
+function updateContact(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+
+    const url = 'http://gerberknights3.xyz/LAMPAPI/UpdateContact.php';
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({ ID: contactId, Name: name, Email: email, Phone: phone }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("response:", data);
+        window.location.href = 'contact_list.html'; // Redirect to contact list
+    })
+    .catch(error => {
+        console.error('Error updating contact:', error);
+    });
+}
+
+// Attach the submit event handler to the form
+document.getElementById('edit-contact-form').addEventListener('submit', updateContact);

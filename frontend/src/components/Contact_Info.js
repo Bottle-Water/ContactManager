@@ -1,97 +1,92 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import './styles.css';
+let results = [];
 
-const Contact_Info = () => {
-    const [results, setResults] = useState([]);
+// Fetch contact data when the page loads
+document.addEventListener('DOMContentLoaded', searchData);
 
-    useEffect(() => {
-        searchData();
-    }, []);
+// Function to fetch contact data
+function searchData() {
+    const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
 
-    const searchData = async () => {
-        const url ='http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ search: "", userId: localStorage.getItem('userID') })
+    })
+    .then(response => response.json())
+    .then(json => {
+        if (json.error) {
+            console.log("Error: ", json.error);
+            results = [];
+        } else if (json.results && json.results.length > 0) {
+            results = json.results;
+        } else {
+            console.log("No valid data found");
+            results = [];
+        }
+        renderContactList(); // Render the list of contacts after fetching data
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error);
+    });
+}
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        body: JSON.stringify({ search: "", userId : localStorage.getItem('userID') })
-        })
-        .then((response) => response.json())
-        .then((json) => {
+// Function to handle contact deletion
+function deleteContact(id) {
+    const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
 
-            if (json.error) {
-                console.log("Error: ", json.error)
-                setResults([]);
-            } 
-            else if (json.results && json.results.length > 0) {
-                setResults(json.results);
-                console.log(json.results);
-            }
-            else {
-                console.log("No valid data found");
-                setResults([]);
-            }
-        })
-            .catch((error) => {
-                console.error("Error Searching Data: ", error);
-            });
-    }
-
-    const delete_handler = async (id) => {
-        const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
-
-        try {
-        const response = await fetch(url, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
+    fetch(url, {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify({ ID: id }),
-        });
-
-        const data = await response.json();
+        },
+        body: JSON.stringify({ ID: id })
+    })
+    .then(response => response.json())
+    .then(data => {
         console.log("response: ", data);
-
-        // refetch the data after a deletion
         if (data.results === "contact deleted") {
-            searchData();
+            searchData(); // Refresh the contact list after deletion
         }
-        } catch (error) {
-        console.error('Error Deleting contact:', error);
-        }
-    }
+    })
+    .catch(error => {
+        console.error('Error deleting contact:', error);
+    });
+}
 
-    return (
-        <div className="item">
-            {results.map((result, index) => (
-            <div key={index} className="contact-list">
-            <div className="info">
-                <div>Name: {result.Name}</div>
-                <div>Email: {result.Email}</div>
-                <div>Phone: {result.Phone}</div>
-            </div>
+// Function to render the contact list in the DOM
+function renderContactList() {
+    const contactListElement = document.getElementById('contact-list');
+    contactListElement.innerHTML = ''; // Clear the previous list
+
+    if (results.length > 0) {
+        results.forEach((result, index) => {
+            const contactItem = document.createElement('div');
+            contactItem.classList.add('contact-list');
+
+            contactItem.innerHTML = `
+                <div class="info">
+                    <div>Name: ${result.Name}</div>
+                    <div>Email: ${result.Email}</div>
+                    <div>Phone: ${result.Phone}</div>
+                </div>
                 <i 
-                    className="trash icon right floated" 
-                    style={{ color: "red", marginTop: "10px", cursor: "pointer" }}
-                    onClick={() => delete_handler(result.ID)}
+                    class="trash icon right floated" 
+                    style="color: red; margin-top: 10px; cursor: pointer;"
+                    onclick="deleteContact(${result.ID})"
                 ></i>
-                <Link 
-                    to={`/edit/${result.ID}`}
-                    state = {{ name: result.Name, email: result.Email, phone: result.Phone }}
-                >
+                <a href="/edit.html?id=${result.ID}">
                     <i 
-                        className="edit alternate icon right floated" 
-                        style={{ color: "blue", marginTop: "10px", marginRight: "10px", cursor: "pointer" }}
+                        class="edit alternate icon right floated" 
+                        style="color: blue; margin-top: 10px; margin-right: 10px; cursor: pointer;"
                     ></i>
-                </Link>
-        </div>
-        ))}
-        </div>
-    );
-};
+                </a>
+            `;
 
-export default Contact_Info;
+            contactListElement.appendChild(contactItem);
+        });
+    } else {
+        contactListElement.innerHTML = '<p>No contacts found</p>';
+    }
+}

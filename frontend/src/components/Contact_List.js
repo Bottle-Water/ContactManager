@@ -1,126 +1,100 @@
-import React, { useState }from 'react';
-import { Link } from "react-router-dom";
-import Contact_Info from "./Contact_Info";
-import Navbar2 from "./Navbar2";
-import Search_Bar from "./Search_Bar";
-import './styles.css'
+let results = [];
+let searchValue = "";
 
-const Contact_List = () => {
-  const [results, setResults] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-
-
-  // this fetch works for the search bar
-  const fetchData = (value) => {
+// Function to fetch search results
+function fetchData(value) {
     const url = 'http://gerberknights3.xyz/LAMPAPI/SearchContacts.php';
 
     if (value === "") {
-        setResults([]);
-    } 
-    else {
+        results = [];
+        renderContactList(); // Clear results if search input is empty
+    } else {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-        body: JSON.stringify({ search: value, userId : localStorage.getItem('userID') })
+            body: JSON.stringify({ search: value, userId: localStorage.getItem('userID') })
         })
-        .then((response) => response.json())
-        .then((json) => {
-
+        .then(response => response.json())
+        .then(json => {
             if (json.error) {
-                console.log("Error: ", json.error)
-                setResults([]);
-            } 
-            else if (json.results && json.results.length > 0) {
-                setResults(json.results);
-                console.log(json.results);
-            }
-            else {
+                console.log("Error: ", json.error);
+                results = [];
+            } else if (json.results && json.results.length > 0) {
+                results = json.results;
+            } else {
                 console.log("No valid data found");
-                setResults([]);
+                results = [];
             }
+            renderContactList(); // Render updated list
         })
-        .catch((error) => {
-            console.error("Error Searching Data: ", error);
+        .catch(error => {
+            console.error("Error fetching data:", error);
         });
-    }   
-  };
+    }
+}
 
-  const delete_Contact_Handler = async (id) => {
+// Function to delete a contact
+function deleteContact(id) {
     const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
 
-    try {
-      const response = await fetch(url, {
+    fetch(url, {
         method: 'POST',
-        mode: 'cors',
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({ ID: id }),
-      });
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.results === "contact deleted") {
+            fetchData(searchValue); // Refetch data after deleting contact
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting contact:', error);
+    });
+}
 
-      const data = await response.json();
-      console.log("response: ", data);
+// Function to render the contact list
+function renderContactList() {
+    const resultsList = document.getElementById('results-list');
+    const contactList = document.getElementById('contact-list');
+    resultsList.innerHTML = ''; // Clear previous search results
+    contactList.innerHTML = ''; // Clear contact list
 
-      // refetch the data after a deletion
-      if (data.results === "contact deleted") {
-        fetchData(searchValue);
-      }
+    if (results.length > 0) {
+        results.forEach(result => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item');
 
-    } catch (error) {
-      console.error('Error Deleting contact:', error);
+            resultItem.innerHTML = `
+                <p>Name: ${result.Name}</p>
+                <p>Email: ${result.Email}</p>
+                <p>Phone: ${result.Phone}</p>
+                <p>Date Created: ${result.DateCreated}</p>
+                <div class="icon-group">
+                    <a href="/edit.html?id=${result.ID}">
+                        <i class="edit icon" style="color: blue; cursor: pointer;"></i>
+                    </a>
+                    <i class="trash icon" style="color: red; cursor: pointer;" onclick="deleteContact(${result.ID})"></i>
+                </div>
+            `;
+            resultsList.appendChild(resultItem);
+        });
+    } else {
+        resultsList.innerHTML = "<p>No contacts found</p>";
     }
+}
 
-  };
-  
-  const render_ContactList = () => {
-    return (
-      <Contact_Info />
-    );
-  };
+// Event listener for the search bar
+document.getElementById('search-bar').addEventListener('input', (event) => {
+    searchValue = event.target.value;
+    fetchData(searchValue);
+});
 
-  return (
-    <>
-    <Navbar2/>
-      <div className="search-bar-container">
-        <Search_Bar setResults={ setResults } setSearchValue={ setSearchValue }/>
-        <div className='results-list'>
-          {results.map((result, index) => (
-              <div key={index} className="result-item">
-                <p>Name: {result.Name}</p>
-                <p>Email: {result.Email}</p>
-                <p>Phone: {result.Phone}</p>
-                <p>Date Created: {result.DateCreated}</p>
-                <div className="icon-group">
-                  <Link 
-                  to={`/edit/${result.ID}`}
-                  state = {{ name: result.Name, email: result.Email, phone: result.Phone }}
-                  >
-                  <i 
-                      className="edit icon" 
-                      style={{ color: "blue", cursor: "pointer"}}
-                  ></i>
-                  </Link>
-                  <i 
-                  className="trash icon" 
-                  style={{ color: "red", cursor: "pointer" }}
-                  onClick={() => delete_Contact_Handler(result.ID)}
-                  ></i>
-                  </div>
-              </div>
-          ))}
-        </div>
-
-      <div className="contact-header">Contact List</div>
-      <p></p>
-        <div className="ui celled list">{render_ContactList()}</div>
-        <Link to="/add">
-        <button className="ui blue button">Add Contact</button>
-        </Link>
-      </div>
-    </>
-  );
-};
-
-export default Contact_List;
+// Initial fetch to load all contacts on page load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchData(""); // Fetch all contacts initially
+});
