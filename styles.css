@@ -3,21 +3,89 @@
     margin: 0px;
     padding: 0px;
 }
+
+body {
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6em;
+}
+
+/* Has navbar's text and links in it*/
+.container{
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Top bar */
+.navbar {
+    background: #4e6996;
+    color: #ffffff;
+    height: 90px;
+}
+
+/* Edits 'Contact Manager' in top left*/
+.navbar .logo {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+/* These make the links for Login and Register look better*/
+.navbar a {
+    color: #fff;
+    /* Takes off underline from links */
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.navbar a:hover {
+    color: lightblue;
+}
+
+/* Makes the top bar go in a row */
+.navbar .container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    height: 100%; 
+}
+
+/* Makes Login and Register go to top right corner */
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+}
+
+/* adds a margin between the two links in the top corner */
+.navbar ul li {
+    margin-left: 25px;
+}
+
+/* This is the main background of the website */
 .main-body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(../images/bkgrnd.jpg) no-repeat; 
+    background: url(/src/images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
+    font-family: 'Arial', sans-serif;
+    /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
 }
+
+/* Welcome text at top */
 .welcome-text {
     background-color: rgba(59, 173, 235, 0.6);  
     border-radius: 10px;
     margin-bottom: 60px;
     padding: 5px;
 }
+.welcome-text h1 {
+    opacity: 1;
+}
+/* This is the box around the login screen */
 form {
     background-color: rgb(208, 208, 208);
     padding: 4rem;
@@ -25,6 +93,8 @@ form {
     width: 600px;
     text-align: center;
 }
+
+/* These 2 are for the Email, Username, and Passowrd input boxes*/
 .input-box input {
     width: 100%;
     padding: 0.8rem;
@@ -36,6 +106,34 @@ form {
 .input-box {
     margin-bottom: 1rem;
 }
+
+/* First and last name boxes */
+.name-box {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+/* These 2 are for the password requirements on register */
+.input-box ul {
+    list-style-type: disc;
+    text-align: left;
+    color: red;
+    padding: 10px;
+    font-size: 15px;
+}
+.input-box ul li {
+    list-style-type: disc;
+}
+
+input:focus {
+    outline: none;
+    border-color: #979797;
+    box-shadow: 0 0 8px rgba(43, 43, 43, 0.5);;
+}
+
+/* Login button's size and color */
 .btn {
     padding: 0.9rem;
     background-color: #2baf51;
@@ -48,9 +146,176 @@ form {
 .btn:hover {
     background-color: #279d49;
 }
-.name-box {
-    width: 100%;
-    gap: 10px;
+
+/* Margin area for bottom text and login button*/
+.create-account {
+    margin-top: 1rem;
+}
+
+/* These two will edit the Create Account link's color and font*/
+.create-account a {
+    color: rgb(3, 150, 204);
+    font-weight: bold;
+    text-decoration: underline;
+}
+.create-account a:hover {
+    color: #196bb9;
+}
+
+/* These handle the information boxes with contacts in them */
+.ui.celled.list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.info {
+    font: bold;
+    font-size: larger;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.contact-list {
+    width: 150%;
+    margin-top: 15px;
+    background-color: rgb(198, 198, 198);
+    border-radius: 10px;
+}
+
+/* These handle the add contact button */
+.add-buttons {
+    display: flex;
+    flex-direction: column;
+    padding-left: 190px;
+    padding-right: 190px;
+}
+.add-buttons a {
+    color: rgb(3, 150, 204);
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: bold;
+}
+.add-buttons a:hover {
+    color: #196bb9;
+}
+
+/* This is the search res */
+.search-bar-container {
+    background-color: #eee;
+    height: 100vh;
+    padding: 20px;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling for search bar */
+.input-wrapper {
+    background-color: white;
+    width: 50%;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 10px;
+    box-shadow: 0 0 8 #ddd;
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+/* Search for a contact's bar */
+.search-bar-box {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    font-size: 1.25rem;
+    margin-left: 5px;
+}
+.search-bar-box:focus {
+    box-shadow: none;
+  }
+
+/* Results of the search. */
+.results-list {
+    max-height: 400px; 
+    overflow-y: auto;  
+    width: 50%;
+    border-radius: 5px;      
+    margin: 0 auto;    
+}
+.results-list::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 8px;
+}
+
+.result-item {
+    width: 100%; 
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
+.result-item p:last-child {
+    border-bottom: none;
+}
+.result-item:hover {
+    background-color: #ddd;
+}
+
+/* Contact list header */
+.contact-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* These create the text above the edit and trash icons when hovering. */
+.icon {
+    position: relative;
+}
+.edit.icon::after {
+    content: "Edit";
+    visibility: hidden;
+    opacity: 0;
+    width: 55px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -30px; 
+    transition: opacity 0.3s;
+}
+.trash.icon::after {
+    content: "Delete";
+    visibility: hidden;
+    opacity: 0;
+    width: 55px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 120%; 
+    left: 50%;
+    margin-left: -38px; 
+    transition: opacity 0.3s;
+}
+.icon:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+.icon-group {
+    display: flex; 
+    flex-direction: row; 
+    margin-left: 90%;
+    gap: 10px;
+
 }
