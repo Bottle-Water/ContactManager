@@ -3,6 +3,7 @@
 <head>
     <meta charSet="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -20,16 +21,20 @@
     </nav>
     <div class="search-bar-container">
         <div class="input-wrapper">
-            <input class="search-bar-box" placeholder="Search for a Contact" value=""/>
+            <input class="search-bar-box" placeholder="Search for a Contact" id="SearchBar-id"/>
         </div>
-        <div class="results-list"></div>
+        <div class="results-list" id="results-list">
+            <!-- Search results will go here -->
+        </div>
         <div class="contact-header">Contact List</div>
         <p></p>
-        <div class="ui celled list">
-            <div class="item"></div>
+        <div class="ui celled list" id="contact-list">
+
         </div>
+        <a href="/components/Add_Contact.html">
+            <button class="ui blue button">Add Contact</button>
+        </a>
     </div>
-    <!-- Add location of js file in script as src="file.js" -->
     <script src="./js/list.js"></script>
 </body>
 </html>
