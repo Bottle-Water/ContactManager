@@ -72,15 +72,16 @@ body {
     background: url(images/bkgrnd.jpg) no-repeat; 
     background-size: 100% 100%;
     font-family: 'Arial', sans-serif;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3);
     /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
 }
 
 /* Welcome text at top */
 .welcome-text {
-    background-color: rgba(59, 173, 235, 0.6);  
+    background-color: rgb(196, 201, 204);  
     border-radius: 10px;
     margin-bottom: 60px;
-    padding: 5px;
+    padding: 30px;
 }
 .welcome-text h1 {
     opacity: 1;
