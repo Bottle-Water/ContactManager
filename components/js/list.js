@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>Phone: ${contact.Phone}</p>
                     </div>
                     <div class="icon-group">
-                        <a href="/components/Contact_Edit.html?id=${contact.ID}&name=${encodeURIComponent(contact.Name)}&email=${encodeURIComponent(contact.Email)}&phone=${encodeURIComponent(contact.Phone)}">
+                        <a href="/components/Contact_edit.html?id=${contact.ID}&name=${encodeURIComponent(contact.Name)}&email=${encodeURIComponent(contact.Email)}&phone=${encodeURIComponent(contact.Phone)}">
                             <i class="fas fa-edit edit-icon" style="color: blue; cursor: pointer;"></i>
                         </a>
                         <i class="fas fa-trash trash-icon" style="color: red; cursor: pointer;" onclick="deleteContact(${contact.ID})"></i>
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>Phone: ${result.Phone}</p>
                     </div>
                     <div class="icon-group">
-                        <a href="/components/Contact_Edit.html?id=${result.ID}&name=${encodeURIComponent(result.Name)}&email=${encodeURIComponent(result.Email)}&phone=${encodeURIComponent(result.Phone)}">
+                        <a href="/components/Contact_edit.html?id=${result.ID}&name=${encodeURIComponent(result.Name)}&email=${encodeURIComponent(result.Email)}&phone=${encodeURIComponent(result.Phone)}">
                             <i class="fas fa-edit edit-icon" style="color: blue; cursor: pointer;"></i>
                         </a>
                         <i class="fas fa-trash trash-icon" style="color: red; cursor: pointer;" onclick="deleteContact(${result.ID})"></i>
