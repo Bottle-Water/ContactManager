@@ -6,7 +6,7 @@
 
 body {
     color: #000000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif ;
     font-size: 16px;
     line-height: 1.6em;
 }
@@ -20,7 +20,7 @@ body {
 
 /* Top bar */
 .navbar {
-    background: #4e6996;
+    background: #1e555c;
     color: #ffffff;
     height: 90px;
 }
@@ -29,6 +29,7 @@ body {
 .navbar .logo {
     font-size: xx-large;
     font-weight: bold;
+
 }
 
 /* These make the links for Login and Register look better*/
@@ -69,39 +70,41 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(images/bkgrnd.jpg) no-repeat; 
+    background: url(images/bckrnd.jpg) no-repeat; 
     background-size: 100% 100%;
     font-family: 'Arial', sans-serif;
-    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.1);
     /* background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),url(/src/images/bkgrnd.jpg); */
 }
 
 /* Welcome text at top */
-.welcome-text {
+.welcometext {
     background-color: rgb(196, 201, 204);  
     border-radius: 10px;
     margin-bottom: 60px;
     padding: 30px;
 }
-.welcome-text h1 {
+.welcometext h1 {
     opacity: 1;
 }
 /* This is the box around the login screen */
 form {
-    background-color: rgb(208, 208, 208);
-    padding: 4rem;
-    border-radius: 10px;
-    width: 600px;
+    position: relative;
+    backround: transparent;
+    box-shadow: inset 0 0 0 1000px rgba(245, 244, 244, 0.671);
+    padding: 30px 40px;
+    border-radius: 40px;
+    width: 560px;
     text-align: center;
 }
 
 /* These 2 are for the Email, Username, and Passowrd input boxes*/
 .input-box input {
     width: 100%;
-    padding: 0.8rem;
+    padding: 1rem;
     margin-top: 1rem;
     border: 1px solid #ccc;
-    border-radius: 13px;
+    border-radius: 15px;
     outline: none;
 }
 .input-box {
@@ -155,12 +158,12 @@ input:focus {
 
 /* These two will edit the Create Account link's color and font*/
 .create-account a {
-    color: rgb(3, 150, 204);
+    color: rgb(17, 72, 255);
     font-weight: bold;
     text-decoration: underline;
 }
 .create-account a:hover {
-    color: #196bb9;
+    color: #211499;
 }
 
 /* These handle the information boxes with contacts in them */
@@ -276,9 +279,11 @@ input:focus {
 /* These create the text above the edit and trash icons when hovering. */
 .icon {
     position: relative;
+    
 }
 .edit.icon::after {
     content: "Edit";
+    backround-image: url(images\pen.png);
     visibility: hidden;
     opacity: 0;
     width: 55px;
@@ -295,6 +300,7 @@ input:focus {
 }
 .trash.icon::after {
     content: "Delete";
+    backround-image: url(images\delete.png);
     visibility: hidden;
     opacity: 0;
     width: 55px;
@@ -319,4 +325,92 @@ input:focus {
     margin-left: 90%;
     gap: 10px;
 
+}
+
+.adder {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.adder:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.form-title {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+/* Style for the logo image */
+.logo-image {
+    height: 50px; /* Adjust the height as needed */
+    margin-right: 10px; /* Space between the image and the text */
+    vertical-align: middle; /* Align the image vertically with the text */
+}
+
+/* Adjust the logo container to align items properly */
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+
+.welcome-container {
+    display: block;
+    padding: 40px;
+    max-width: 800px;
+    margin: 100px auto; /* Centers the container horizontally and adds space from the top */
+    text-align: center;
+}
+
+.welcome-text {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 4rem;
+    color: #333;
+    padding: 40px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.281); /* Slightly transparent background */
+    border-radius: 10px;
+    position: relative;
+    z-index: 1; /* Ensures the text box is above the background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    line-height: 1.2; /* Adjust the value as needed for more spacing */
+}
+
+
+.welcome-text::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #3498db, #e74c3c, #2ecc71, #f1c40f);
+    background-size: 400% 400%;
+    z-index: -1; /* Ensures the glow is behind the text box */
+    animation: glowingBorder 8s ease infinite;
+    filter: blur(8px); /* Glowing effect */
+    opacity: 0.8;
+}
+
+@keyframes glowingBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
