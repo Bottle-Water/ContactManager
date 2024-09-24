@@ -90,7 +90,7 @@ body {
 /* This is the box around the login screen */
 form {
     position: relative;
-    backround: transparent;
+    background: transparent;
     box-shadow: inset 0 0 0 1000px rgba(245, 244, 244, 0.671);
     padding: 30px 40px;
     border-radius: 40px;
@@ -172,6 +172,7 @@ input:focus {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 450px;
 }
 .info {
     font: bold;
@@ -179,12 +180,6 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
     padding: 10px;
     margin-bottom: 10px;
-}
-.contact-list {
-    width: 150%;
-    margin-top: 15px;
-    background-color: rgb(198, 198, 198);
-    border-radius: 10px;
 }
 
 /* These handle the add contact button */
@@ -240,24 +235,12 @@ input:focus {
     box-shadow: none;
   }
 
-/* Results of the search. */
-.results-list {
-    max-height: 400px; 
-    overflow-y: auto;  
-    width: 50%;
-    border-radius: 5px;      
-    margin: 0 auto;    
-}
-.results-list::-webkit-scrollbar-track {
-    background: white;
-    border-radius: 8px;
-}
-
 .result-item {
     width: 100%; 
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 10px;
+    margin: 5px;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 15px;
@@ -266,8 +249,8 @@ input:focus {
     border-bottom: none;
 }
 .result-item:hover {
-    background-color: #ddd;
-}
+    background-color: #eeeeee;
+} 
 
 /* Contact list header */
 .contact-header {
@@ -279,11 +262,9 @@ input:focus {
 /* These create the text above the edit and trash icons when hovering. */
 .icon {
     position: relative;
-    
 }
-.edit.icon::after {
+.edit-icon::after {
     content: "Edit";
-    backround-image: url(images\pen.png);
     visibility: hidden;
     opacity: 0;
     width: 55px;
@@ -298,9 +279,8 @@ input:focus {
     margin-left: -30px; 
     transition: opacity 0.3s;
 }
-.trash.icon::after {
+.trash-icon::after {
     content: "Delete";
-    backround-image: url(images\delete.png);
     visibility: hidden;
     opacity: 0;
     width: 55px;
@@ -315,7 +295,11 @@ input:focus {
     margin-left: -38px; 
     transition: opacity 0.3s;
 }
-.icon:hover::after {
+.edit-icon:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+.trash-icon:hover::after {
     visibility: visible;
     opacity: 1;
 }
@@ -324,7 +308,6 @@ input:focus {
     flex-direction: row; 
     margin-left: 90%;
     gap: 10px;
-
 }
 
 .adder {
@@ -413,4 +396,27 @@ input:focus {
     100% {
         background-position: 0% 50%;
     }
+}
+
+/* Confirm deletion box and the background shade */
+.delete-confirmation{
+    display: none;
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background-color: white; 
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+.shade {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 999;
 }
