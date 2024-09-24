@@ -87,15 +87,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Response:', data);
 
             if (data) {
-                window.location.href = '/components/index.html';
+                window.location.href = '/components/Contact_List.html';
             }
             else {
                 console.error('Error during registration:', data.error);
-                regErr.textContent = error;
+                regErr.textContent = 'An error occurred during registration. Please try again.';
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            regErr.textContent = error;
+            regErr.textContent = 'An error occurred during registration. Please try again.';
         }
     }
 });
