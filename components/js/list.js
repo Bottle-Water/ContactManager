@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log("response:", data);
-            window.location.href = 'contact_list.html'; // Redirect to contact list
+            window.location.href = 'Contact_List.html'; // Redirect to contact list
         })
         .catch(error => {
             console.error('Error updating contact:', error);
