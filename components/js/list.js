@@ -54,7 +54,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Delete Contact
+    // Delete Contact (and display confirmation box)
+    let deleteID = null;
+    window.showConfirmationBox = function(id) {
+        deleteID = id;
+        document.getElementById('confirmation-box').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+    window.confirmDelete = function() {
+        deleteContact(deleteID);
+        deleteID = null;  
+        hideConfirmationBox(); 
+    }
+    window.cancelDelete = function() {
+        deleteID = null; 
+        hideConfirmationBox(); 
+    }
+    function hideConfirmationBox() {
+        document.getElementById('confirmation-box').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
     window.deleteContact = function(id) {
         const url = 'http://gerberknights3.xyz/LAMPAPI/DeleteContact.php';
 
@@ -135,19 +154,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("No valid data found");
                 contacts = [];
             }
-            renderContactList(); // Render the list of contacts after fetching data
+            renderContactList(contacts); // Render the list of contacts after fetching data
         })
         .catch(error => {
             console.error("Error fetching data:", error);
         });
     }
 
-    function renderContactList() {
+    function renderContactList(list) {
         const contactList = document.getElementById('contact-list');
         contactList.innerHTML = '';
     
-        if (contacts.length > 0) {
-            contacts.forEach(contact => {
+        if (list.length > 0) {
+            list.forEach(contact => {
                 const contactItem = document.createElement('div');
                 contactItem.classList.add('result-item');
     
@@ -159,17 +178,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                     <div class="icon-group">
                         <a href="/components/Contact_Edit.html?id=${contact.ID}&name=${encodeURIComponent(contact.Name)}&email=${encodeURIComponent(contact.Email)}&phone=${encodeURIComponent(contact.Phone)}">
-                            <i class="fas fa-edit edit-icon" style="color: blue; cursor: pointer;"></i>
+                            <i class="fas fa-edit edit-icon icon" style="color: blue; cursor: pointer;"></i>
                         </a>
-                        <i class="fas fa-trash trash-icon" style="color: red; cursor: pointer;" onclick="deleteContact(${contact.ID})"></i>
+                        <i class="fas fa-trash trash-icon icon" style="color: red; cursor: pointer;" onclick="showConfirmationBox(${contact.ID})"></i>
                     </div>
                 `;
                 contactList.appendChild(contactItem);
             });
         }
+        else {
+            const contactItem = document.createElement('div');
+            contactItem.classList.add('result-item');
+            contactItem.innerHTML = `
+            <p>No Contacts</p>
+            `;
+            contactList.appendChild(contactItem);
+        }
     }
 
-    // render search bar
+    // search
     let results = [];
     let searchValue = "";
     const searchForm = document.getElementById('SearchBar-id');
@@ -185,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         if (value === "") {
             results = [];
-            renderSearchList(results); // Clear results if search input is empty
+            renderContactList(contacts); // Clear results if search input is empty
         } else {
             fetch(url, {
                 method: 'POST',
@@ -205,40 +232,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log("No valid data found");
                     results = [];
                 }
-                renderSearchList(results)
+                renderContactList(results)
             })
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
-        }
-    }
-
-    function renderSearchList(results) {
-        const resultsList = document.getElementById('results-list');
-        resultsList.innerHTML = '';
-        
-        if(results.length > 0) {
-            results.forEach(result => {
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-
-                resultItem.innerHTML = `
-                    <div class="info">
-                        <p>Name: ${result.Name}</p>
-                        <p>Email: ${result.Email}</p>
-                        <p>Phone: ${result.Phone}</p>
-                    </div>
-                    <div class="icon-group">
-                        <a href="/components/Contact_Edit.html?id=${result.ID}&name=${encodeURIComponent(result.Name)}&email=${encodeURIComponent(result.Email)}&phone=${encodeURIComponent(result.Phone)}">
-                            <i class="fas fa-edit edit-icon" style="color: blue; cursor: pointer;"></i>
-                        </a>
-                        <i class="fas fa-trash trash-icon" style="color: red; cursor: pointer;" onclick="deleteContact(${result.ID})"></i>
-                    </div>
-                `;
-                resultsList.appendChild(resultItem);
-            });
-        } else {
-            console.log("no results");
         }
     }
 });
