@@ -35,7 +35,7 @@ async function registerUser(FirstName, LastName, Login, password) {
 
         if (data) {
             // Redirect to login page upon successful registration
-            window.location.href = '/';
+            window.location.href = 'http://gerberknights3.xyz/index.html';
         }
     } catch (error) {
         console.error('Error during registration:', error);
