@@ -174,7 +174,7 @@ input:focus {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 450px;
+    width: 650px;
 }
 .info {
     font: bold;
@@ -265,12 +265,21 @@ input:focus {
 .icon {
     position: relative;
 }
+.edit-icon {
+    margin-top: 5px; /* Adjust this value to move the icon up or down */
+    cursor: pointer; /* Add a pointer cursor for better UX */
+}
+
+.trash-icon {
+    margin-top: 5px; /* Adjust this value to move the icon up or down */
+    cursor: pointer; /* Add a pointer cursor for better UX */
+}
 .edit-icon::after {
     content: "Edit";
     visibility: hidden;
     opacity: 0;
     width: 55px;
-    background-color: black;
+    background-color: rgba(27, 27, 27, 0.438);
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -286,7 +295,7 @@ input:focus {
     visibility: hidden;
     opacity: 0;
     width: 55px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.459);
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -422,4 +431,20 @@ input:focus {
     height: 100%; 
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: 999;
+}
+
+.field {
+    margin-bottom: 15px; /* Adjust this value to increase the space between input fields */
+}
+
+
+navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 30px; /* Space between the image and the text */
 }
